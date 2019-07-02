@@ -93,6 +93,7 @@ class RidgeReg(LinearReg):
 
 </p>
 </details>
+
 #### Perform linear regression on the data
 
 <details><summary>Click to expand</summary>
