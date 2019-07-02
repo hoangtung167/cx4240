@@ -161,6 +161,8 @@ plt.scatter(feature_five, target)
 </p>
 </details>
 
+![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
+
 ## IIIb. Polynomial Regression
 
 ## IV. Decision Tree/ Random Forest
