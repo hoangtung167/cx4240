@@ -3,7 +3,15 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 
 #### Environment Setup
 ```markdown
-
+import os
+from scipy import ndimage, misc
+from matplotlib import pyplot as plt
+import numpy as np
+from sklearn.datasets import load_boston, load_diabetes, load_digits, load_breast_cancer
+from keras.datasets import mnist
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+%matplotlib inline
 ```
 
 ## II. Feature Extraction
@@ -17,7 +25,48 @@ To access original data set, see [LANL Earthquake Prediction Data Set](https://w
 To access processed data set, see [Data Extracted](extract_train_full.csv)
 
 ## IIIa. Linear Regression
+### Linear Regression Class
 
+<details><summary>Click to expand</summary>
+<p>
+
+
+```python
+class LinearReg(object):
+    @staticmethod 
+    def fit(xtrain, ytrain):
+        """
+        Args:
+            xtrain: NxD numpy array, where N is number 
+                    of instances and D is the dimensionality of each 
+                    instance
+            ytarin: Nx1 numpy array, the true labels
+        Return:
+            weight: Dx1 numpy array, the weights of linear regression model
+        """
+        x_tp = np.transpose(xtrain)
+        weight = np.linalg.inv(x_tp @ xtrain) @ x_tp @ ytrain
+        return weight
+        raise NotImplementedError
+
+    @staticmethod
+    def predict(xtest, weight):
+        """
+        Args:
+            xtest: NxD numpy array, where N is number 
+                   of instances and D is the dimensionality of each 
+                   instance
+            weight: Dx1 numpy array, the weights of linear regression model
+        Return:
+            prediction: Nx1 numpy array, the predicted labels
+        """
+        prediction = xtest @ weight
+        return prediction
+        raise NotImplementedError
+```
+
+</p>
+</details>
 ## IIIb. Polynomial Regression
 
 ## IV. Decision Tree/ Random Forest
