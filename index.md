@@ -7,7 +7,7 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 <p>
 
 
-```python
+```markdown
 import os
 from scipy import ndimage, misc
 from matplotlib import pyplot as plt
@@ -40,7 +40,7 @@ To access processed data set, see [Data Extracted](extract_train_full.csv)
 <p>
 
 
-```python
+```markdown
 class LinearReg(object):
     @staticmethod 
     def fit(xtrain, ytrain):
@@ -100,7 +100,7 @@ class RidgeReg(LinearReg):
 <p>
 
 
-```python
+```markdown
 train = pd.read_csv("extract_train_full.csv", delimiter = ',')
 dataset = train.as_matrix()
 features = dataset[0:dataset.shape[0], 1:6]
@@ -161,6 +161,7 @@ plt.scatter(feature_five, target)
 </p>
 </details>
 
+#### Graphs
 ![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
 
 ## IIIb. Polynomial Regression
