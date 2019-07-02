@@ -3,10 +3,6 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 
 #### Environment Setup
 
-<details><summary>Click to expand</summary>
-<p>
-
-
 ```markdown
 import os
 from scipy import ndimage, misc
@@ -18,9 +14,6 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 %matplotlib inline
 ```
-
-</p>
-</details>
 
 
 ## II. Feature Extraction
@@ -35,10 +28,6 @@ To access processed data set, see [Data Extracted](extract_train_full.csv)
 
 ## IIIa. Linear Regression
 #### Linear Regression and Ridge Regression Class
-
-<details><summary>Click to expand</summary>
-<p>
-
 
 ```markdown
 class LinearReg(object):
@@ -91,13 +80,8 @@ class RidgeReg(LinearReg):
         raise NotImplementedError
 ```
 
-</p>
-</details>
 
 #### Perform linear regression on the data
-
-<details><summary>Click to expand</summary>
-<p>
 
 
 ```markdown
@@ -157,9 +141,6 @@ y = np.array([predict[np.argmin(feature_five)], predict[np.argmax(feature_five)]
 plt.plot(x, y, color = 'r', linewidth = 2.0)
 plt.scatter(feature_five, target)
 ```
-
-</p>
-</details>
 
 #### Graphs
 ![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
