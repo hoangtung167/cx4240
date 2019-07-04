@@ -3,7 +3,6 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 
 #### Environment Setup
 <details><summary>CLICK TO EXPAND</summary>
-<p>
 
 ```python
 import os
@@ -16,7 +15,6 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 %matplotlib inline
 ```
-</p>
 </details>
 
 ## II. Feature Extraction
