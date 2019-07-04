@@ -121,6 +121,9 @@ y = np.array([predict[np.argmin(feature_five)], predict[np.argmax(feature_five)]
 plt.plot(x, y, color = 'r', linewidth = 2.0)
 plt.scatter(feature_five, target)
 ```
+#### Root Mean Square
+
+Root Mean Square of Linear Regression is 2.6732
 
 #### Graphs
 ![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
