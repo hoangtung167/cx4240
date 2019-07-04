@@ -28,20 +28,13 @@ To access processed data set, see [Data Extracted](extract_train_full.csv)
 
 ## IIIa. Linear Regression
 #### Linear Regression and Ridge Regression Class
+<details><summary>CLICK TO EXPAND</summary>
+<p>
 
 ```markdown
 class LinearReg(object):
     @staticmethod 
     def fit(xtrain, ytrain):
-        """
-        Args:
-            xtrain: NxD numpy array, where N is number 
-                    of instances and D is the dimensionality of each 
-                    instance
-            ytarin: Nx1 numpy array, the true labels
-        Return:
-            weight: Dx1 numpy array, the weights of linear regression model
-        """
         x_tp = np.transpose(xtrain)
         weight = np.linalg.inv(x_tp @ xtrain) @ x_tp @ ytrain
         return weight
@@ -49,15 +42,6 @@ class LinearReg(object):
 
     @staticmethod
     def predict(xtest, weight):
-        """
-        Args:
-            xtest: NxD numpy array, where N is number 
-                   of instances and D is the dimensionality of each 
-                   instance
-            weight: Dx1 numpy array, the weights of linear regression model
-        Return:
-            prediction: Nx1 numpy array, the predicted labels
-        """
         prediction = xtest @ weight
         return prediction
         raise NotImplementedError
@@ -79,10 +63,12 @@ class RidgeReg(LinearReg):
         return prediction
         raise NotImplementedError
 ```
-
+</p>
+</details>
 
 #### Perform linear regression on the data
-
+<details><summary>CLICK TO EXPAND</summary>
+<p>
 
 ```markdown
 train = pd.read_csv("extract_train_full.csv", delimiter = ',')
@@ -141,6 +127,8 @@ y = np.array([predict[np.argmin(feature_five)], predict[np.argmax(feature_five)]
 plt.plot(x, y, color = 'r', linewidth = 2.0)
 plt.scatter(feature_five, target)
 ```
+</p>
+</details>
 
 #### Graphs
 ![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
