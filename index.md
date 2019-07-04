@@ -15,6 +15,7 @@ from keras.datasets import mnist
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 ```
+
 </p>
 </details>
 
