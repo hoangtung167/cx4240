@@ -128,6 +128,8 @@ Root Mean Square of Linear Regression is 2.6732
 #### Graphs
 ![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
 
+#### Analysis
+
 ## IIIb. Polynomial Regression
 
 ## IV. Decision Tree/ Random Forest
