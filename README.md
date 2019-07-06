@@ -57,7 +57,7 @@ fig.tight_layout()
 fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
 ```
 
-### Graph the results
+#### Graph the results
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -122,6 +122,8 @@ features_poly = poly.fit_transform(features)
 reg = LinearRegression().fit(features_poly, target)
 print(reg.score(features_poly, target))
 ```
+
+#### Graph the results
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
