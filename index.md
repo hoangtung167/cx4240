@@ -26,52 +26,19 @@ To access original data set, see [LANL Earthquake Prediction Data Set](https://w
 To access processed data set, see [Data Extracted](extract_train_full.csv)
 
 ## IIIa. Linear Regression
-#### Linear Regression and Ridge Regression Class
-
-
-```python
-class LinearReg(object):
-    @staticmethod 
-    def fit(xtrain, ytrain):
-        x_tp = np.transpose(xtrain)
-        weight = np.linalg.inv(x_tp @ xtrain) @ x_tp @ ytrain
-        return weight
-        raise NotImplementedError
-
-    @staticmethod
-    def predict(xtest, weight):
-        prediction = xtest @ weight
-        return prediction
-        raise NotImplementedError
-        
-class RidgeReg(LinearReg):
-
-    @staticmethod
-    def fit(xtrain, ytrain, c_lambda):
-        xtrain = np.append(np.ones((xtrain.shape[0], 1)), xtrain, axis = 1)
-        tau = c_lambda * np.eye(xtrain.shape[1])
-        tau[0][0] = 0
-        weight = np.linalg.inv(xtrain.T @ xtrain + tau) @ xtrain.T @ ytrain
-        return weight
-        raise NotImplementedError
-        
-    def predict(xtest, weight):
-        x_phi = np.append(np.ones((xtest.shape[0],1)), xtest, axis = 1)
-        prediction = x_phi @ weight
-        return prediction
-        raise NotImplementedError
-```
-
-
-#### Perform linear regression on the data
-
+#### Transform data
 ```python
 train = pd.read_csv("extract_train_full.csv", delimiter = ',')
 dataset = train.as_matrix()
 features = dataset[0:dataset.shape[0], 1:6]
 target = dataset[0:dataset.shape[0], 6]
-weight = LinearReg.fit(features, target)
-predict = LinearReg.predict(features, weight)
+```
+#### Perform linear regression on the data
+
+```python
+reg = LinearRegression().fit(features, target)
+print(reg.score(features, target))
+reg.coef_
 
 fig, axes = plt.subplots(nrows=2, ncols=3)
 fig.tight_layout()
@@ -80,51 +47,42 @@ fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspac
 plt.subplot(321)
 plt.ylabel("Target Values")
 plt.xlabel("Feature #1")
-feature_one = dataset[0:dataset.shape[0], 1].reshape(dataset.shape[0], 1)
-x = np.array([np.amin(feature_one),np.amax(feature_one)])
-y = np.array([predict[np.argmin(feature_one)], predict[np.argmax(feature_one)]])
-plt.plot(x, y, color = 'r', linewidth = 2.0)
-plt.scatter(feature_one, target)
+plt.scatter(features[:,0], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,0], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
 
 plt.subplot(322)
 plt.ylabel("Target Values")
 plt.xlabel("Feature #2")
-feature_two = dataset[0:dataset.shape[0], 2].reshape(dataset.shape[0], 1)
-x = np.array([np.amin(feature_two),np.amax(feature_two)])
-y = np.array([predict[np.argmin(feature_two)], predict[np.argmax(feature_two)]])
-plt.plot(x, y, color = 'r', linewidth = 2.0)
-plt.scatter(feature_two, target)
+plt.scatter(features[:,1], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,1], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
 
 plt.subplot(323)
 plt.ylabel("Target Values")
 plt.xlabel("Feature #3")
-feature_three = dataset[0:dataset.shape[0], 3].reshape(dataset.shape[0], 1)
-x = np.array([np.amin(feature_three),np.amax(feature_three)])
-y = np.array([predict[np.argmin(feature_three)], predict[np.argmax(feature_three)]])
-plt.plot(x, y, color = 'r', linewidth = 2.0)
-plt.scatter(feature_three, target)
+plt.scatter(features[:,2], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,2], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
 
 plt.subplot(324)
 plt.ylabel("Target Values")
 plt.xlabel("Feature #4")
-feature_four = dataset[0:dataset.shape[0], 4].reshape(dataset.shape[0], 1)
-x = np.array([np.amin(feature_four),np.amax(feature_four)])
-y = np.array([predict[np.argmin(feature_four)], predict[np.argmax(feature_four)]])
-plt.plot(x, y, color = 'r', linewidth = 2.0)
-plt.scatter(feature_four, target)
+plt.scatter(features[:,3], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,3], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
 
 plt.subplot(325)
 plt.ylabel("Target Values")
 plt.xlabel("Feature #5")
-feature_five = dataset[0:dataset.shape[0], 1].reshape(dataset.shape[0], 1)
-x = np.array([np.amin(feature_five),np.amax(feature_five)])
-y = np.array([predict[np.argmin(feature_five)], predict[np.argmax(feature_five)]])
-plt.plot(x, y, color = 'r', linewidth = 2.0)
-plt.scatter(feature_five, target)
+plt.scatter(features[:,4], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,4], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
 ```
-#### Root Mean Square
+#### Regression Score
+The coefficient R^2 is defined as (1 - u/v), where u is the residual sum of squares ((y_true - y_pred) ** 2).sum() and v is the total sum of squares ((y_true - y_true.mean()) ** 2).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a R^2 score of 0.0.
 
-Root Mean Square of Linear Regression is 2.6732
+Regression Score of Linear Regression is 0.4754292221704254.
 
 #### Graphs
 ![Linear Regression.png]({{site.baseurl}}/Linear Regression.png)
@@ -135,6 +93,7 @@ Root Mean Square of Linear Regression is 2.6732
 #### Perform polynomial regression on the data
 
 ```python
+poly = PolynomialFeatures(degree=2)
 features_poly = poly.fit_transform(features)
 reg = LinearRegression().fit(features_poly, target)
 print(reg.score(features_poly, target))
