@@ -12,6 +12,7 @@ from sklearn.datasets import load_boston, load_diabetes, load_digits, load_breas
 from keras.datasets import mnist
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 ```
 
 ## II. Feature Extraction
@@ -131,6 +132,56 @@ Root Mean Square of Linear Regression is 2.6732
 #### Analysis
 
 ## IIIb. Polynomial Regression
+#### Perform polynomial regression on the data
+
+```python
+features_poly = poly.fit_transform(features)
+reg = LinearRegression().fit(features_poly, target)
+print(reg.score(features_poly, target))
+reg.coef_
+
+fig, axes = plt.subplots(nrows=2, ncols=3)
+fig.tight_layout()
+fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
+
+plt.subplot(321)
+plt.ylabel("Target Values")
+plt.xlabel("Feature #1")
+plt.scatter(features[:,0], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,0], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
+
+plt.subplot(322)
+plt.ylabel("Target Values")
+plt.xlabel("Feature #2")
+plt.scatter(features[:,1], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,1], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
+
+plt.subplot(323)
+plt.ylabel("Target Values")
+plt.xlabel("Feature #3")
+plt.scatter(features[:,2], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,2], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
+
+plt.subplot(324)
+plt.ylabel("Target Values")
+plt.xlabel("Feature #4")
+plt.scatter(features[:,3], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,3], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
+
+plt.subplot(325)
+plt.ylabel("Target Values")
+plt.xlabel("Feature #5")
+plt.scatter(features[:,4], target, s=10, c='b', marker="s", label='original')
+plt.scatter(features[:,4], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
+plt.legend(loc='upper right');
+```
+#### Graphs
+![Polynomial Regression.png]({{site.baseurl}}/Polynomial Regression.png)
+
 
 ## IV. Decision Tree/ Random Forest
 
