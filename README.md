@@ -10,11 +10,17 @@ import os
 from scipy import ndimage, misc
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
 from sklearn.datasets import load_boston, load_diabetes, load_digits, load_breast_cancer
 from keras.datasets import mnist
-import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import Ridge
+from sklearn.metrics import mean_absolute_error
+from sklearn import datasets, linear_model
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+import statistics 
 ```
 
 </p>
@@ -36,10 +42,68 @@ To access processed data set, see [Data Extracted](extract_train_full.csv)
 <p>
   
 ```python
-train = pd.read_csv("extract_train_full.csv", delimiter = ',')
-dataset = train.as_matrix()
-features = dataset[0:dataset.shape[0], 1:6]
-target = dataset[0:dataset.shape[0], 6]
+target = pd.read_csv("extract_label_Jul08.csv", delimiter = ',')
+target = target.as_matrix()
+target = target[:,1]
+
+features = pd.read_csv("extract_train_Jul08.csv", delimiter = ',')
+features = features.as_matrix()
+features = features[:, 1:17]
+```
+
+</p>
+</details>
+
+#### Plot Features Methods
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+def plot_features(features, reg, features_poly, number):
+    plt.ylabel("Target Values")
+    plt.xlabel("Feature #" + str(number))
+    plt.scatter(features[:,number-1], target, s=10, c='b', marker="s", label='original')
+    plt.scatter(features[:,number-1], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
+    plt.legend(loc='upper right')
+```
+
+</p>
+</details>
+
+#### Kfold Cross Validation for Linear and Polynomial Regression
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+def K_Fold(features, target, numfolds, classifier):
+
+    kf = KFold(n_splits=numfolds)
+    kf.get_n_splits(features)
+
+    i = 0
+    mae = np.zeros(numfolds-1) 
+    for train_index, test_index in kf.split(features):
+        features_train, features_test = features[train_index], features[test_index]
+        target_train, target_test = target[train_index], target[test_index]
+    
+        poly = PolynomialFeatures(degree=2)
+        features_poly_train = features_train 
+        features_poly_test = features_test
+        if classifier == "polynomial" :
+            features_poly_train = poly.fit_transform(features_train)
+            features_poly_test = poly.fit_transform(features_test)
+        elif classifier == "linear":
+            features_poly_train = features_train 
+            features_poly_test = features_test
+        
+        reg = LinearRegression().fit(features_poly_train, target_train)
+    
+        i = i+1
+        if (i < numfolds):
+            mae[i-1] = mean_absolute_error(target_test, reg.predict(features_poly_test))
+            
+    print("The average values of mean absolute error is:", (sum(mae)/(numfolds-1)))
+    print("Variance of mean absolute error is % s" %(statistics.variance(mae))) 
 ```
 
 </p>
@@ -49,13 +113,10 @@ target = dataset[0:dataset.shape[0], 6]
 
 ```python
 reg = LinearRegression().fit(features, target)
-print(reg.score(features, target))
-reg.coef_
 
-fig, axes = plt.subplots(nrows=2, ncols=3)
-fig.tight_layout()
-fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
+print("The loss values is: ", mean_absolute_error(target, reg.predict(features)))
 ```
+The loss values is:  2.110853811043013
 
 #### Graph the results
 
@@ -63,40 +124,29 @@ fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspac
 <p>
  
 ```python
-plt.subplot(321)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #1")
-plt.scatter(features[:,0], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,0], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+fig, axes = plt.subplots(nrows=3, ncols=2)
+fig.tight_layout()
+fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
 
-plt.subplot(322)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #2")
-plt.scatter(features[:,1], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,1], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+for i in range(6):
+    plt.subplot(32*10 +(i+1))
+    plot_features(features, reg, features, i+1)
 
-plt.subplot(323)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #3")
-plt.scatter(features[:,2], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,2], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+fig, axes = plt.subplots(nrows=3, ncols=2)
+fig.tight_layout()
+fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
 
-plt.subplot(324)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #4")
-plt.scatter(features[:,3], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,3], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+for i in range(6):
+    plt.subplot(32*10 +(i+1))
+    plot_features(features, reg, features, i+7)
 
-plt.subplot(325)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #5")
-plt.scatter(features[:,4], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,4], reg.predict(features),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+fig, axes = plt.subplots(nrows=3, ncols=2)
+fig.tight_layout()
+fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
+
+for i in range(6):
+    plt.subplot(32*10 +(i+1))
+    plot_features(features, reg, features, i+13)
 ```
 
 </p>
@@ -104,24 +154,20 @@ plt.legend(loc='upper right');
 
 ![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression.png)
 
-#### Regression Score
-The coefficient R^2 is defined as (1 - u/v), where u is the residual sum of squares ((y_true - y_pred) ** 2).sum() and v is the total sum of squares ((y_true - y_true.mean()) ** 2).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a R^2 score of 0.0.
-
-Regression Score of Linear Regression is 0.4754292221704254.
-
 #### Analysis
 
 ## IIIb. Polynomial Regression
 #### Perform polynomial regression on the data
-
-
  
 ```python
 poly = PolynomialFeatures(degree=2)
 features_poly = poly.fit_transform(features)
 reg = LinearRegression().fit(features_poly, target)
-print(reg.score(features_poly, target))
+
+print("The loss values is: ", mean_absolute_error(target, reg.predict(features_poly)))
 ```
+The loss values is:  1.985654086901071
+
 
 #### Graph the results
 
@@ -129,44 +175,29 @@ print(reg.score(features_poly, target))
 <p>
   
 ```python
-fig, axes = plt.subplots(nrows=2, ncols=3)
+fig, axes = plt.subplots(nrows=3, ncols=2)
 fig.tight_layout()
 fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
 
-plt.subplot(321)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #1")
-plt.scatter(features[:,0], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,0], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+for i in range(6):
+    plt.subplot(32*10 +(i+1))
+    plot_features(features, reg, features_poly, i+1)
 
-plt.subplot(322)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #2")
-plt.scatter(features[:,1], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,1], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+fig, axes = plt.subplots(nrows=3, ncols=2)
+fig.tight_layout()
+fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
 
-plt.subplot(323)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #3")
-plt.scatter(features[:,2], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,2], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+for i in range(6):
+    plt.subplot(32*10 +(i+1))
+    plot_features(features, reg, features_poly, i+7)
 
-plt.subplot(324)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #4")
-plt.scatter(features[:,3], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,3], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+fig, axes = plt.subplots(nrows=3, ncols=2)
+fig.tight_layout()
+fig.subplots_adjust(left=0.1, bottom=-1.2, right=0.9, top=0.9, wspace=0.4, hspace=0.2)
 
-plt.subplot(325)
-plt.ylabel("Target Values")
-plt.xlabel("Feature #5")
-plt.scatter(features[:,4], target, s=10, c='b', marker="s", label='original')
-plt.scatter(features[:,4], reg.predict(features_poly),  s=10, c='r', marker="o", label='predicted')
-plt.legend(loc='upper right');
+for i in range(4):
+    plt.subplot(32*10 +(i+1))
+    plot_features(features, reg, features_poly, i+13)
 ```
 
 </p>
@@ -174,10 +205,6 @@ plt.legend(loc='upper right');
 
 ![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression.png)
 
-#### Regression Score
-The coefficient R^2 is defined as (1 - u/v), where u is the residual sum of squares ((y_true - y_pred) ** 2).sum() and v is the total sum of squares ((y_true - y_true.mean()) ** 2).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a R^2 score of 0.0.
-
-Regression Score of Linear Regression is 0.4909749205128894.
 
 #### Analysis
 
