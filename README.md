@@ -126,14 +126,14 @@ K_Fold(features,target, 10, "linear")
 K_Fold(features,target, 50, "linear")
 K_Fold(features,target, 100, "linear")
 ```
-The average values of mean absolute error is: 2.11648228726888
-Variance of mean absolute error is 0.3037948123611948
-The average values of mean absolute error is: 2.32764647869577
-Variance of mean absolute error is 0.6064364572425152
-The average values of mean absolute error is: 2.215050705247842
-Variance of mean absolute error is 1.632732053904914
-The average values of mean absolute error is: 2.1840056400348913
-Variance of mean absolute error is 1.7970172144011285
+The average values of mean absolute error is: 2.11648228726888  
+Variance of mean absolute error is 0.3037948123611948  
+The average values of mean absolute error is: 2.32764647869577  
+Variance of mean absolute error is 0.6064364572425152  
+The average values of mean absolute error is: 2.215050705247842  
+Variance of mean absolute error is 1.632732053904914  
+The average values of mean absolute error is: 2.1840056400348913  
+Variance of mean absolute error is 1.7970172144011285  
 
 #### Graph the results
 
@@ -193,14 +193,14 @@ K_Fold(features,target, 10, "polynomial")
 K_Fold(features,target, 50, "polynomial")
 K_Fold(features,target, 100, "polynomial")
 ```
-The average values of mean absolute error is: 2.2161712125633586. \n
-Variance of mean absolute error is 0.36444471639163495
-The average values of mean absolute error is: 2.4379615680536126
-Variance of mean absolute error is 0.7217988794498568
-The average values of mean absolute error is: 2.311128151349101
-Variance of mean absolute error is 1.7229855562955887
-The average values of mean absolute error is: 2.2432512038106136
-Variance of mean absolute error is 1.9431429755822602
+The average values of mean absolute error is: 2.2161712125633586  
+Variance of mean absolute error is 0.36444471639163495  
+The average values of mean absolute error is: 2.4379615680536126  
+Variance of mean absolute error is 0.7217988794498568  
+The average values of mean absolute error is: 2.311128151349101  
+Variance of mean absolute error is 1.7229855562955887  
+The average values of mean absolute error is: 2.2432512038106136  
+Variance of mean absolute error is 1.9431429755822602  
 
 #### Graph the results
 
