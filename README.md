@@ -5,7 +5,7 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 <details><summary>CLICK TO EXPAND</summary>
 <p>
   
-```markdown
+```python
 import os
 from scipy import ndimage, misc
 from matplotlib import pyplot as plt
@@ -131,7 +131,7 @@ plt.legend(loc='lower right')
 ![Linear Regression K Kold](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression%20K%20Fold.png)
 
 
-#### Graph the results
+#### Graph the prediction results
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -198,7 +198,7 @@ plt.legend(loc='lower right')
 ![Polynomial Regression K Fold](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression%20K%20Fold.png)
 
 
-#### Graph the results
+#### Graph the prediction results
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -236,6 +236,8 @@ for i in range(4):
 
 
 #### Analysis
+
+## IIIc. Comparision between Linear Regression and Polynomial Regression
 
 ## IV. Decision Tree/ Random Forest
 
