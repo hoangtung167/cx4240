@@ -27,11 +27,6 @@ import statistics
 </details>
 
 ## II. Feature Extraction
-%describe the process%
-
-```python
-your code here
-```
 To access original data set, see [LANL Earthquake Prediction Data Set](https://www.kaggle.com/c/LANL-Earthquake-Prediction/data)
 
 To access processed data set, see [Data Extracted](extract_train_full.csv)
