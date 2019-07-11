@@ -128,7 +128,7 @@ plt.plot(i, mae, color = 'blue', label = 'Average MAE')
 plt.plot(i, var, color = 'red', label = 'Variance of MAE')
 plt.legend(loc='lower right')
 ```
-![Linear Regression K Kold](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression%20K%20Fold.png)
+![Linear Regression K Kold](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression%20K%20Fold.png)
 
 
 #### Graph the prediction results
@@ -165,7 +165,7 @@ for i in range(6):
 </p>
 </details>
 
-![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression.png)
+![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression.png)
 
 #### Analysis
 
@@ -195,7 +195,7 @@ plt.plot(i, mae, color = 'blue', label = 'Average MAE')
 plt.plot(i, var, color = 'red', label = 'Variance of MAE')
 plt.legend(loc='lower right')
 ```
-![Polynomial Regression K Fold](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression%20K%20Fold.png)
+![Polynomial Regression K Fold](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression%20K%20Fold.png)
 
 
 #### Graph the prediction results
@@ -232,7 +232,7 @@ for i in range(4):
 </p>
 </details>
 
-![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression.png)
+![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression.png)
 
 
 #### Analysis
