@@ -133,7 +133,7 @@ plt.plot(i, mae, color = 'blue', label = 'Average MAE')
 plt.plot(i, var, color = 'red', label = 'Variance of MAE')
 plt.legend(loc='lower right')
 ```
-![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression.png)
+![Linear Regression K Kold](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression%20K%20Fold.png)
 
 
 #### Graph the results
@@ -200,7 +200,7 @@ plt.plot(i, mae, color = 'blue', label = 'Average MAE')
 plt.plot(i, var, color = 'red', label = 'Variance of MAE')
 plt.legend(loc='lower right')
 ```
-![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression.png)
+![Polynomial Regression K Fold](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression%20K%20Fold.png)
 
 
 #### Graph the results
