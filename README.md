@@ -102,8 +102,9 @@ def K_Fold(features, target, numfolds, classifier):
         if (i < numfolds):
             mae[i-1] = mean_absolute_error(target_test, reg.predict(features_poly_test))
             
-    print("The average values of mean absolute error is:", (sum(mae)/(numfolds-1)))
-    print("Variance of mean absolute error is % s" %(statistics.variance(mae))) 
+    avrmae = (sum(mae)/(numfolds-1))
+    var = (statistics.variance(mae))
+    return avrmae, var
 ```
 
 </p>
@@ -121,19 +122,19 @@ The loss values is:  2.110853811043013
 #### Perfom Kfold cross validation on the data
 
 ```python
-K_Fold(features,target, 5, "linear")
-K_Fold(features,target, 10, "linear")
-K_Fold(features,target, 50, "linear")
-K_Fold(features,target, 100, "linear")
+i = np.array([5,10,50,100, 150])
+mae = np.zeros(i.shape[0])
+var = np.zeros(i.shape[0])
+for numfold in range(i.shape[0]):
+    m, v = K_Fold(features,target, i[numfold], "linear")
+    mae[numfold] = m
+    var[numfold] = v
+plt.plot(i, mae, color = 'blue', label = 'Average MAE')
+plt.plot(i, var, color = 'red', label = 'Variance of MAE')
+plt.legend(loc='lower right')
 ```
-The average values of mean absolute error is: 2.11648228726888  
-Variance of mean absolute error is 0.3037948123611948  
-The average values of mean absolute error is: 2.32764647869577  
-Variance of mean absolute error is 0.6064364572425152  
-The average values of mean absolute error is: 2.215050705247842  
-Variance of mean absolute error is 1.632732053904914  
-The average values of mean absolute error is: 2.1840056400348913  
-Variance of mean absolute error is 1.7970172144011285  
+![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Linear%20Regression.png)
+
 
 #### Graph the results
 
@@ -188,19 +189,19 @@ The loss values is:  1.985654086901071
 #### Perfom Kfold cross validation on the data
 
 ```python
-K_Fold(features,target, 5, "polynomial")
-K_Fold(features,target, 10, "polynomial")
-K_Fold(features,target, 50, "polynomial")
-K_Fold(features,target, 100, "polynomial")
+i = np.array([5,10,50,100, 150])
+mae = np.zeros(i.shape[0])
+var = np.zeros(i.shape[0])
+for numfold in range(i.shape[0]):
+    m, v = K_Fold(features,target, i[numfold], "linear")
+    mae[numfold] = m
+    var[numfold] = v
+plt.plot(i, mae, color = 'blue', label = 'Average MAE')
+plt.plot(i, var, color = 'red', label = 'Variance of MAE')
+plt.legend(loc='lower right')
 ```
-The average values of mean absolute error is: 2.2161712125633586  
-Variance of mean absolute error is 0.36444471639163495  
-The average values of mean absolute error is: 2.4379615680536126  
-Variance of mean absolute error is 0.7217988794498568  
-The average values of mean absolute error is: 2.311128151349101  
-Variance of mean absolute error is 1.7229855562955887  
-The average values of mean absolute error is: 2.2432512038106136  
-Variance of mean absolute error is 1.9431429755822602  
+![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Polynomial%20Regression.png)
+
 
 #### Graph the results
 
