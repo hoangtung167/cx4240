@@ -62,7 +62,7 @@ def generate_feature_basic(seg_id, seg, X):
 </p>
 </details>
 
-**Fast Fourier Transform (4 features: ‘FFT_mean_imag’, ‘FFT_mean_real’, ‘FFT_std_max’, ‘FFT_std_real’):**  
+**Fast Fourier Transform (4 features:‘FFT_mean_imag’, ‘FFT_mean_real’, ‘FFT_std_max’, ‘FFT_std_real’):**  
 Transform the time-domain signal into frequency-domain signal. Since it is complex number in the frequency-domain, I separate them into real and imaginary parts, each is reported with its mean and standard deviation
 
 <details><summary>CLICK TO EXPAND</summary>
@@ -83,7 +83,7 @@ def generate_feature_FFT(seg_id, seg, X):
 </p>
 </details>
 
-**Rolling windows: (6 features: ‘Roll_mean_absDiff’,‘Roll_mean_p05’,‘Roll_std_absDiff’,‘Roll_std_p05’,‘Roll_std_p30’,‘Roll_std_p60’)**  
+**Rolling windows: (6 features:‘Roll_mean_absDiff’,‘Roll_mean_p05’,‘Roll_std_absDiff’,‘Roll_std_p05’,‘Roll_std_p30’,‘Roll_std_p60’)**  
 
 From the 150_000 data, we choose a rolling window size = 100, at each window, we calculate the mean and standard deviation of each window. We use the numpy percentile function to calculate 5%,30%, 60% of the standard deviation (‘Roll_std_p05’,‘Roll_std_p30’,‘Roll_std_p60’), the top 5% of the mean, the mean of the gradient of these vectors (‘Roll_mean_absDiff’, ‘Roll_std_absDiff’).
 
@@ -111,7 +111,7 @@ def generate_feature_Roll(seg_id, seg, X):
 </p>
 </details>
 
-**Mel-frequency cepstral coefficients (2 features: ‘MFCC_mean02’ ‘MFCC_mean16’)**
+**Mel-frequency cepstral coefficients (2 features:‘MFCC_mean02’ ‘MFCC_mean16’)**
 We use the Librosa toolbox to calculate the Mel-frequency cepstral coefficients of the 2nd and 16th components. 
 
 <details><summary>CLICK TO EXPAND</summary>
@@ -156,6 +156,22 @@ y.to_csv('extract_label_Jul08.csv')
 
 </p>
 </details>
+
+The resulting table is as follows:
+
+|    | index | mean     | std      | skew     | FFT_mean_real | FFT_mean_imag | FFT_std_real | FFT_std_max | Roll_std_p05 | Roll_std_p30 | Roll_std_p60 | Roll_std_absDiff | Roll_mean_p05 | Roll_mean_absDiff | MFCC_mean02 | MFCC_mean16 |
+|----|-------|----------|----------|----------|---------------|---------------|--------------|-------------|--------------|--------------|--------------|------------------|---------------|-------------------|-------------|-------------|
+| 0  | 0     | 4.884113 | 5.101106 | -0.02406 | 12            | -1.70E-15     | 2349.811     | 732617      | 2.475639     | 2.848551     | 3.367387     | -5.24E-06        | 4.16          | -2.40E-06         | -26.0598    | 5.51279     |
+| 1  | 1     | 4.725767 | 6.588824 | 0.390561 | 5             | 1.84E-15      | 2566.032     | 708865      | 2.475965     | 2.847842     | 3.38893      | -4.87E-07        | 4.05          | -7.34E-07         | -26.4857    | 5.695142    |
+| 2  | 2     | 4.906393 | 6.967397 | 0.217391 | 5             | 4.85E-16      | 2683.549     | 735959      | 2.538591     | 2.942616     | 3.589814     | 5.39E-06         | 4.14          | 5.07E-06          | -26.484     | 5.620199    |
+| 3  | 3     | 4.90224  | 6.922305 | 0.757278 | 5             | -1.07E-15     | 2685.789     | 735336      | 2.496442     | 2.863141     | 3.442515     | -8.68E-06        | 4.16          | -5.34E-07         | -25.5651    | 5.241189    |
+| 4  | 4     | 4.90872  | 7.30111  | 0.064531 | 12            | -1.46E-16     | 2761.716     | 736308      | 2.491521     | 2.863405     | 3.404453     | 1.54E-06         | 4.21          | 6.67E-07          | -24.8474    | 5.114833    |
+| 5  | 5     | 4.913513 | 5.434111 | -0.1007  | 14            | 3.88E-16      | 2420.968     | 737027      | 2.518196     | 2.89498      | 3.404379     | -1.10E-05        | 4.19          | -4.34E-06         | -27.2839    | 5.498871    |
+| 6  | 6     | 4.85566  | 5.687823 | 0.20881  | -4.46E-15     | -5.82E-16     | 2437.524     | 728349      | 2.506638     | 2.879464     | 3.463679     | -2.79E-06        | 4.19          | -1.60E-06         | -27.8118    | 5.953215    |
+| 7  | 7     | 4.505427 | 5.854512 | -0.17633 | 3             | -1.33E-16     | 2361.259     | 675814      | 2.470411     | 2.811574     | 3.222396     | 2.19E-06         | 3.87          | 3.80E-06          | -24.9011    | 5.303046    |
+| 8  | 8     | 4.717833 | 7.789643 | -0.16017 | 1             | -8.61E-16     | 2805.303     | 707675      | 2.572799     | 2.998636     | 3.747848     | -8.07E-06        | 4             | -1.80E-06         | -28.1274    | 5.274542    |
+| 9  | 9     | 4.73096  | 6.890459 | 0.150779 | 5             | 4.85E-16      | 2620.174     | 709644      | 2.51611      | 2.915285     | 3.575718     | -4.13E-06        | 4.01          | 7.14E-06          | -27.4852    | 5.983643    |
+| 10 | 10    | 4.582873 | 6.157272 | 1.572985 | 3             | 1.16E-15      | 2452.427     | 687431      | 2.483786     | 2.858197     | 3.409716     | 1.87E-07         | 3.87          | -5.47E-06         | -26.2505    | 5.390637    |
 
 ### Visualization of 16 features
 
