@@ -119,6 +119,7 @@ def mv(coefmat):
 
 </p>
 </details>
+
 ### Linear Regression
 
 #### Perform linear regression on the data
