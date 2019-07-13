@@ -5,7 +5,7 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 
 #### Data preview
 
-<details><summary>**show 15 columns of the data**</summary>
+<details><summary>Show 20 columns of the data</summary>
 <p>
 
 
@@ -25,6 +25,11 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 | 6             | 1.2148          |   |
 | 7             | 1.2148          |   |
 | 6             | 1.2148          |   |
+| 7             | 1.2148          |   |
+| 2             | 1.2148          |   |
+| 5             | 1.2148          |   |
+| 7             | 1.2148          |   |
+| 4             | 1.2148          |   |
 | 7             | 1.2148          |   |
 
 </p>
@@ -538,11 +543,11 @@ model = RandomForestRegressor(max_depth=5,min_samples_split=9,random_state=0,
                                   n_estimators=50,criterion='mae')
 ```
 
-Validation MeanAbsoluteError: Mean = 2.020 Std = 0.031
+Validation MeanAbsoluteError: Mean = 2.024 Std = 0.033
 
 ![LGBM without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LGBM_woIndex.png)
 
-With Index, Validation MeanAbsoluteError: Mean = 1.617 Std = 0.038
+Validation MeanAbsoluteError: Mean = 0.680 Std = 0.036
 ![LGBM  with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LGBM_withIndex.png)
 
 </p>
