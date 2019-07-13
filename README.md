@@ -155,10 +155,12 @@ plt.legend(loc='lower right')
 indx = range(target.shape[0])
 plt.axis([0, target.shape[0], -0.1, 16])
 plt.title("Comparison between predicted and actual target values")
-plt.ylabel("Target Values")
-plt.xlabel("Trial Number")
-plt.plot(indx, reg.predict(features), linewidth = 3)
-plt.plot(indx, target, linewidth = 2)
+plt.ylabel("Time before failure(s)")
+plt.xlabel("Index")
+plt.plot(indx, reg.predict(features), linewidth = 3, label = 'Pred')
+plt.plot(indx, target, linewidth = 2, label = 'Actual')
+plt.legend(loc='upper right')
+plt.savefig('Linear Regression.png', dpi = 324)
 ```
 
 </p>
@@ -218,7 +220,43 @@ plt.plot(indx, target, linewidth = 2)
 ![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression.png)
 
 
-#### Analysis
+#### Feature Importance
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+fl = ['index', 'mean', 'std', 'skew', 'FFT_mean_real', 'FFT_mean_imag', 
+     'FFT_std_real', 'FFT_std_max', 'Roll_std_p05', 'Roll_std_p30', 
+      'Roll_std_p60', 'Roll_std_absDiff', 'Roll_mean_p05', 
+      'Roll_mean_absDiff', 'MFCC_mean02', 'MFCC_mean16']
+m, v, c = K_Fold(features,target, 100, "linear")
+mean, error = mv(c)
+## coeff = reg.coef_.shape
+materials = fl
+x_pos = np.arange(len(fl))
+CTEs = -mean/ np.amax(-mean)
+error = error/ np.amax(-mean)
+# Build the plot
+fig, ax = plt.subplots()
+ax.bar(x_pos, CTEs, yerr=error, align='center', color = ['black', 'red', 'green', 'blue', 'cyan'], alpha=0.5, ecolor='black', capsize=10)
+ax.set_ylabel('Gradient value of features')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(materials, rotation = 'vertical')
+ax.set_title('Features Importance')
+ax.yaxis.grid(True)
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('bar_plot_with_error_bars.png', dpi = 324)
+plt.show()
+```
+
+</p>
+</details>
+
+![Feature Importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png)
+
 
 ## IIIc. Comparision between Linear Regression and Polynomial Regression
 
