@@ -38,8 +38,9 @@ import statistics
 
 To access original data set, see [LANL Earthquake Prediction Data Set](https://www.kaggle.com/c/LANL-Earthquake-Prediction/data)
 
+## III. Principal Components Analysis - PCA
 
-## III. Linear and Polynomial Regression 
+## IV. Linear and Polynomial Regression 
 #### Transform data
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -148,9 +149,6 @@ plt.legend(loc='lower right')
 
 #### Compare actual and predicted values of the outcome
 
-<details><summary>CLICK TO EXPAND</summary>
-<p>
- 
 ```python
 indx = range(target.shape[0])
 plt.axis([0, target.shape[0], -0.1, 16])
@@ -163,12 +161,9 @@ plt.legend(loc='upper right')
 plt.savefig('Linear Regression.png', dpi = 324)
 ```
 
-</p>
-</details>
 
 ![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression.png)
 
-#### Analysis
 
 ## IIIb. Polynomial Regression
 #### Perform polynomial regression on the data
@@ -201,9 +196,6 @@ plt.legend(loc='lower right')
 
 #### Compare actual and predicted values of the outcome
 
-<details><summary>CLICK TO EXPAND</summary>
-<p>
-  
 ```python
 indx = range(target.shape[0])
 plt.axis([0, target.shape[0], -0.1, 16])
@@ -214,8 +206,6 @@ plt.plot(indx, reg.predict(features_poly), linewidth = 3)
 plt.plot(indx, target, linewidth = 2)
 ```
 
-</p>
-</details>
 
 ![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression.png)
 
@@ -258,8 +248,12 @@ plt.show()
 ![Feature Importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png)
 
 
-## IIIc. Comparision between Linear Regression and Polynomial Regression
+## V. Decision Tree/ Random Forest / LGB Classifier
 
-## IV. Decision Tree/ Random Forest
+## VI. Deep Learning/ Neural Nets
 
-## V. Deep Learning with Fully Connected, LSTM or 1D-CNN layer
+## VII. Summary
+
+#### Compare the loss values and variances across methods
+
+#### Compare the feature importance across methods
