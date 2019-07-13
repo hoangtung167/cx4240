@@ -23,11 +23,6 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 | 7             | 1.2148          |   |
 | 6             | 1.2148          |   |
 | 7             | 1.2148          |   |
-| 2             | 1.2148          |   |
-| 5             | 1.2148          |   |
-| 7             | 1.2148          |   |
-| 4             | 1.2148          |   |
-| 7             | 1.2148          |   |
 
 #### Feature Extraction input
 #### Environment Setup
