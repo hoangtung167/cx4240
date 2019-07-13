@@ -57,7 +57,8 @@ import statistics
 </details>
 
 ## II. Feature Extraction
-
+<details><summary>CLICK TO EXPAND</summary>
+<p>
 
 From the 150_000 acoustic data containing “random” number, we transform this entire time-series window (each has 150_000 data) into 16 statistical features. The features is selected based on the following public release:
 [link1](https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/94390#latest-554034)
@@ -256,10 +257,8 @@ X.to_csv('extract_test_Jul08.csv')
 
  ![Test_Signal_Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Test_set_visualization.png)
 
-![Training data](https://github.com/hoangtung167/cx4240/blob/master/Dataset/extract_train_Jul08.csv)
-
-To access original data set, see [LANL Earthquake Prediction Data Set](https://www.kaggle.com/c/LANL-Earthquake-Prediction/data)
-
+</p>
+</details>
 
 
 ## III. Principal Components Analysis - PCA
@@ -479,6 +478,7 @@ We use 3 different types of Tree-Classifier for this classification.
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
+  
 ```python
 from sklearn.tree import DecisionTreeRegressor 
 from sklearn.ensemble import RandomForestRegressor
@@ -488,17 +488,16 @@ import lightgbm as lgb
 </p>
 </details>
 
-**Decision Tree**
+### Decision Tree
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
+  
 ```python
 model = DecisionTreeRegressor(min_samples_split = 25, random_state = 1, 
                                   criterion='mae',max_depth=5)
 ```
 
-</p>
-</details>
 With no Index, Validation MeanAbsoluteError: Mean = 2.067 Std = 0.044
 
 ![Decision Tree without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/DT_woIndex.png)
@@ -506,6 +505,61 @@ With no Index, Validation MeanAbsoluteError: Mean = 2.067 Std = 0.044
 With Index, Validation MeanAbsoluteError: Mean = 1.717 Std = 0.083
 ![Decision Tree with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/DT_withIndex.png)
 
+</p>
+</details>
+
+### Random Forest
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+model = RandomForestRegressor(max_depth=5,min_samples_split=9,random_state=0,
+                                  n_estimators=50,criterion='mae')
+```
+
+Validation MeanAbsoluteError: Mean = 2.020 Std = 0.031
+
+![Random Forest without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/RF_woIndex.png)
+
+With Index, Validation MeanAbsoluteError: Mean = 1.617 Std = 0.038
+![Random Forest  with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/RF_withIndex.png)
+
+</p>
+</details>
+
+### Light Gradient Boosting Machine (LGBM)
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+model = RandomForestRegressor(max_depth=5,min_samples_split=9,random_state=0,
+                                  n_estimators=50,criterion='mae')
+```
+
+Validation MeanAbsoluteError: Mean = 2.020 Std = 0.031
+
+![LGBM without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LGBM_woIndex.png)
+
+With Index, Validation MeanAbsoluteError: Mean = 1.617 Std = 0.038
+![LGBM  with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LGBM_withIndex.png)
+
+</p>
+</details>
+
+### Tree-based Technique Comparison
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+Cross Validation score for 5 folds:
+![Tree_score](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Tree_score.png)
+
+Features Importance:
+![Tree_feature_importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Tree_feature_importance.png)
+  
+</p>
+</details>
 
 ## VI. Deep Learning/ Neural Nets
 
