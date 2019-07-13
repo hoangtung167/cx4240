@@ -256,13 +256,6 @@ To access original data set, see [LANL Earthquake Prediction Data Set](https://w
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
-  
-```python
-
-```
-
-</p>
-</details>
 
 
 ## III. Principal Components Analysis - PCA
@@ -477,6 +470,38 @@ plt.plot(indx, target, linewidth = 2)
 
 
 ## V. Decision Tree/ Random Forest / LGB Classifier
+
+We use 3 different types of Tree-Classifier for this classification.
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+```python
+from sklearn.tree import DecisionTreeRegressor 
+from sklearn.ensemble import RandomForestRegressor
+import lightgbm as lgb
+```
+
+</p>
+</details>
+
+**Decision Tree**
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+```python
+model = DecisionTreeRegressor(min_samples_split = 25, random_state = 1, 
+                                  criterion='mae',max_depth=5)
+```
+
+</p>
+</details>
+With no Index, Validation MeanAbsoluteError: Mean = 2.067 Std = 0.044
+
+![Decision Tree without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/DT_woIndex.png)
+
+With Index, Validation MeanAbsoluteError: Mean = 1.717 Std = 0.083
+![Decision Tree with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/DT_withIndex.png)
+
 
 ## VI. Deep Learning/ Neural Nets
 
