@@ -164,7 +164,7 @@ plt.savefig('Linear Regression.png', dpi = 324)
 
 ![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression.png)
 
-### Feature Importance
+#### Feature Importance
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -201,7 +201,6 @@ plt.show()
 
 ![Feature Importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png)
 
-## IIIb. Polynomial Regression
 #### Perform polynomial regression on the data
  
 ```python
