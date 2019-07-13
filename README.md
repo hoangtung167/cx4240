@@ -7,7 +7,6 @@ Scientists at Los Alamos Laboratory have recently found a use for massive amount
 **show 1% of the data**
 
 #### Feature Extraction input
-
 #### Environment Setup
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -36,7 +35,196 @@ import statistics
 ## II. Feature Extraction
 
 
+From the 150_000 acoustic data containing “random” number, we transform this entire time-series window (each has 150_000 data) into 16 statistical features. The features is selected based on the following public release:
+[link1](https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/94390#latest-554034)
+[link2](https://www.kaggle.com/gpreda/lanl-earthquake-eda-and-prediction)
+
+### Feature definitions
+
+**Basic features (4 features- ‘Index’, ‘mean’, ‘std’, ‘skew’):**  
+From 150_000 data, we report the time when the signal is recorded (‘Index’), a single mean value (‘mean’), standard deviation (‘std’), and skew (‘skew’).
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+
+def generate_feature_basic(seg_id, seg, X):
+    xc = pd.Series(seg['acoustic_data'].values)
+    
+    X.loc[seg_id, 'index'] = seg_id
+    X.loc[seg_id, 'mean'] = xc.mean()
+    X.loc[seg_id,'std'] = xc.std()
+    #X.loc[seg_id, 'kurt'] = xc.kurtosis()
+    X.loc[seg_id, 'skew'] = xc.skew()
+```
+
+</p>
+</details>
+
+**Fast Fourier Transform (4 features: ‘FFT_mean_imag’, ‘FFT_mean_real’, ‘FFT_std_max’, ‘FFT_std_real’):**  
+Transform the time-domain signal into frequency-domain signal. Since it is complex number in the frequency-domain, I separate them into real and imaginary parts, each is reported with its mean and standard deviation
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+def generate_feature_FFT(seg_id, seg, X):
+    xc = pd.Series(seg['acoustic_data'].values)
+    zc = np.fft.fft(xc)
+    realFFT, imagFFT = np.real(zc), np.imag(zc)
+    
+    X.loc[seg_id, 'FFT_mean_real'] = realFFT.mean()
+    X.loc[seg_id, 'FFT_mean_imag'] = imagFFT.mean()
+    X.loc[seg_id, 'FFT_std_real'] = realFFT.std()
+    X.loc[seg_id, 'FFT_std_max'] = realFFT.max()
+```
+
+</p>
+</details>
+
+**Rolling windows: (6 features: ‘Roll_mean_absDiff’,‘Roll_mean_p05’,‘Roll_std_absDiff’,‘Roll_std_p05’,‘Roll_std_p30’,‘Roll_std_p60’)**  
+
+From the 150_000 data, we choose a rolling window size = 100, at each window, we calculate the mean and standard deviation of each window. We use the numpy percentile function to calculate 5%,30%, 60% of the standard deviation (‘Roll_std_p05’,‘Roll_std_p30’,‘Roll_std_p60’), the top 5% of the mean, the mean of the gradient of these vectors (‘Roll_mean_absDiff’, ‘Roll_std_absDiff’).
+
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+def generate_feature_Roll(seg_id, seg, X):
+    xc = pd.Series(seg['acoustic_data'].values)
+    
+    windows = 100
+    x_roll_std = xc.rolling(windows).std().dropna().values
+    x_roll_mean = xc.rolling(windows).mean().dropna().values
+    
+    X.loc[seg_id, 'Roll_std_p05'] = np.percentile(x_roll_std, 5)
+    X.loc[seg_id, 'Roll_std_p30'] = np.percentile(x_roll_std,30)
+    X.loc[seg_id, 'Roll_std_p60'] = np.percentile(x_roll_std,60)
+    X.loc[seg_id, 'Roll_std_absDiff'] = np.mean(np.diff(x_roll_std))
+    
+    X.loc[seg_id, 'Roll_mean_p05'] = np.percentile(x_roll_mean, 5)
+    X.loc[seg_id, 'Roll_mean_absDiff'] = np.mean(np.diff(x_roll_mean))
+```
+
+</p>
+</details>
+
+**Mel-frequency cepstral coefficients (2 features: ‘MFCC_mean02’ ‘MFCC_mean16’)**
+We use the Librosa toolbox to calculate the Mel-frequency cepstral coefficients of the 2nd and 16th components. 
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+def generate_feature_Melfrequency(seg_id, seg, X):
+    xc = seg['acoustic_data'].values
+    mfcc = librosa.feature.mfcc(xc.astype(np.float64))
+    mfcc_mean = mfcc.mean(axis = 1)
+    
+    X.loc[seg_id, 'MFCC_mean02'] = mfcc_mean[2]
+    X.loc[seg_id, 'MFCC_mean16'] = mfcc_mean[16]
+```
+
+</p>
+</details>
+
+### Feature Extractions for training data
+
+Since the training data is a large csv file (9.5GB), which exceeds the computation capability of our laptop, we use the pandas with `chunksize = 150000` to load one time-series windown at one. At each time window, 150_000 input data is transformed into 16 dimensional vectors (16 features) and append to input dataframe. The target is the `time before failure` is also appended to a separate dataframe.
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+
+chunksize = 150000
+CsvFileReader = pd.read_csv('train.csv', chunksize = chunksize)
+X, y = pd.DataFrame(), pd.DataFrame()
+
+for seg_id, seg in tqdm_notebook(enumerate(CsvFileReader)):
+    y.loc[seg_id, 'target'] = seg['time_to_failure'].values[-1]
+    generate_feature_basic(seg_id, seg, X)
+    generate_feature_FFT(seg_id, seg, X)
+    generate_feature_Roll(seg_id, seg, X)
+    generate_feature_Melfrequency(seg_id, seg, X)
+
+X.to_csv('extract_train_Jul08.csv')
+y.to_csv('extract_label_Jul08.csv')
+```
+
+</p>
+</details>
+
+### Visualization of 16 features
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+X1, y1 = X.iloc[500:1000], y.iloc[500:1000]
+
+plt.figure(figsize=(15, 15))
+for i, col in enumerate(X.columns):
+    ax1 = plt.subplot(4, 4, i + 1)
+    plt.plot(X1[col], color='blue');plt.title(col);ax1.set_ylabel(col, color='b')
+    ax2 = ax1.twinx(); plt.plot(y1, color='g'); ax2.set_ylabel('time_to_failure', color='g')
+    ax1.legend(loc= 2);ax2.legend(['time_to_failure'], loc=1)
+plt.subplots_adjust(wspace=0.5, hspace=0.3)
+```
+
+</p>
+</details>
+
+ ![Feature Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Visualization.png)
+ 
+ ### Load the test data and Visualize
+
+The test data does not provide the information on the time when the data is recorded. We believe this information is encoded inside the segment ID in heximal form. Nonetheless, we can make the prediction with the rest of 15 features.
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+submission = pd.read_csv('sample_submission.csv', index_col='seg_id')
+X_test = pd.DataFrame()
+plt.figure(figsize=(16,10))
+plt.subplots_adjust(wspace=0.5, hspace=0.6)
+for ii,seg_name in tqdm_notebook(enumerate(submission.index)):
+    seg = pd.read_csv('test/{}.csv'.format(seg_name))
+    generate_feature_basic(seg_name, seg, X_test)
+    generate_feature_FFT(seg_name, seg,  X_test)
+    generate_feature_Roll(seg_name, seg,  X_test)
+    generate_feature_Melfrequency(seg_name, seg,  X_test)
+    
+    if ii<18:
+        ax1 = plt.subplot(3, 6, ii + 1)
+        plt.plot(seg['acoustic_data'].values, color='blue')
+        plt.title(seg_name)
+X.to_csv('extract_test_Jul08.csv')
+```
+
+</p>
+</details>
+
+
+ ![Test_Signal_Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Test_set_visualization.png)
+
+![Training data](https://github.com/hoangtung167/cx4240/blob/master/Dataset/extract_train_Jul08.csv)
+
 To access original data set, see [LANL Earthquake Prediction Data Set](https://www.kaggle.com/c/LANL-Earthquake-Prediction/data)
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+
+```
+
+</p>
+</details>
+
 
 ## III. Principal Components Analysis - PCA
 
