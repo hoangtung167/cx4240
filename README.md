@@ -68,6 +68,8 @@ import statistics
 From the 150_000 acoustic data containing “random” number, we transform this entire time-series window (each has 150_000 data) into 16 statistical features. The features is selected based on the following public release:
 [link1](https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/94390#latest-554034)
 [link2](https://www.kaggle.com/gpreda/lanl-earthquake-eda-and-prediction)
+[link3](https://www.kaggle.com/artgor/seismic-data-eda-and-baseline)
+
 
 ### Feature definitions
 
