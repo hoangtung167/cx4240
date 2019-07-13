@@ -40,7 +40,7 @@ To access original data set, see [LANL Earthquake Prediction Data Set](https://w
 
 ## III. Principal Components Analysis - PCA
 
-## IV. Linear and Polynomial Regression 
+## IV. Linear Regression 
 #### Transform data
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -119,7 +119,6 @@ def mv(coefmat):
 
 </p>
 </details>
-
 
 #### Perform linear regression on the data
 
@@ -201,6 +200,7 @@ plt.show()
 
 ![Feature Importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png)
 
+## V. Polynomial Regression
 #### Perform polynomial regression on the data
  
 ```python
@@ -245,14 +245,11 @@ plt.plot(indx, target, linewidth = 2)
 ![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression.png)
 
 
-#
+## VI. Decision Tree/ Random Forest / LGB Classifier
 
+## VII. Deep Learning/ Neural Nets
 
-## V. Decision Tree/ Random Forest / LGB Classifier
-
-## VI. Deep Learning/ Neural Nets
-
-## VII. Summary
+## VIII. Summary
 
 #### Compare the loss values and variances across methods
 
