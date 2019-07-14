@@ -73,6 +73,8 @@ From the 150_000 acoustic data containing “random” number, we transform this
 
 ### Feature definitions
 
+![Feature Extraction Concept](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Extraction_Concept.png)
+
 **Basic features (4 features) 
 ‘Index’, ‘mean’, ‘std’, ‘skew’**  
 From 150_000 data, we report the time when the signal is recorded (‘Index’), a single mean value (‘mean’), standard deviation (‘std’), and skew (‘skew’).
@@ -634,4 +636,8 @@ model = SVR(kernel='rbf')
 
 #### Compare the loss values and variances across methods
 
+![Summary_MAE_Score](https://github.com/hoangtung167/cx4240/blob/master/CSV%20Files/Summary_MAE_Score.png)
+
 #### Compare the feature importance across methods
+
+![Summary_Feature_Importance](https://github.com/hoangtung167/cx4240/blob/master/CSV%20Files/Summary_Feature_Importance.png)
