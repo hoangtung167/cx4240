@@ -270,96 +270,6 @@ X.to_csv('extract_test_Jul08.csv')
 
 ## III. Principal Components Analysis - PCA
 
- ### Importing Required Packages
-```python
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-```
- ### Data Upload 
-```python
-train = pd.read_csv('extract_train_Jul08.csv')
-train = train.drop(['index'], axis = 1)
-train = train.drop(train.columns[0],axis = 1)
-```
- ### Standardize Data for PCA input
-```python
-scaler=StandardScaler() #instantiate
-scaler.fit(train) # compute the mean and standard which will be used in the next command
-X_scaled=scaler.transform(train)
-```
- ### Fitting the PCA (16 principal components)
-```python
-pca=PCA() 
-pca.fit(X_scaled) 
-X_pca=pca.transform(X_scaled)
-```
-
-```python
-ex_variance=np.var(X_pca,axis=0)
-ex_variance_ratio = ex_variance/np.sum(ex_variance)
-print(ex_variance_ratio)
-```
- ### Pricipal Component Proportioanlity
-```python
-plt.figure(figsize=(10,5))
-plt.bar(np.arange(1,16),pca.explained_variance_ratio_, linewidth=3)
-plt.plot(np.arange(1,16),np.cumsum(pca.explained_variance_ratio_), linewidth=3, c = 'r', label = 'Cumulative Proportion')
-plt.legend()
-plt.xlabel('Principal Component')
-plt.ylabel('Variance Proportion')
-plt.grid()
-plt.plot([0.99]*16, '--')
-```
-
-```python
-ex_variance=np.var(X_pca,axis=0)
-ex_variance_ratio = ex_variance/np.sum(ex_variance)
-print(ex_variance_ratio)
-```
-
- ### Feature Variance for Pricipal Component 1 & 2
-```python
-plt.matshow([pca.components_[0]],cmap='viridis')
-plt.yticks([0],['1st Comp'],fontsize=10)
-plt.colorbar()
-plt.xticks(range(len(train.columns)),train.columns,rotation=65,ha='left')
-plt.show()
-
-plt.matshow([pca.components_[1]],cmap='viridis')
-plt.yticks([0],['2nd Comp'],fontsize=10)
-plt.colorbar()
-plt.xticks(range(len(train.columns)),train.columns,rotation=65,ha='left')
-plt.show()
-```
- ### Visualizing Feature Correlation
-```python
-features = test.columns
-plt.figure(figsize=(8,8))
-s=sns.heatmap(test.corr(),cmap='coolwarm') 
-s.set_yticklabels(s.get_yticklabels(),rotation=30,fontsize=7)
-s.set_xticklabels(s.get_xticklabels(),rotation=30,fontsize=7)
-plt.show()
-```
- ### Saving Reduced Dimensionality Matrix and Feature Importance
-```python
-a = np.abs(pca.components_[0])
-a = a/np.max(a)
-df = pd.DataFrame()
-df['features'] = test.columns
-df['importance'] = a
-df.to_csv('PCA_extracted.csv')
-print(df.shape)
-
-pca=PCA(n_components = 9) 
-pca.fit(X_scaled) 
-X_pca=pca.transform(X_scaled)
-df = pd.DataFrame(X_pca)
-df.to_csv('pca_exported_9features.csv')
-```
 ## IV. Linear and Polynomial Regression 
 #### Transform data
 <details><summary>CLICK TO EXPAND</summary>
@@ -658,7 +568,62 @@ Features Importance:
 </p>
 </details>
 
-## VI. Deep Learning/ Neural Nets
+## VI. SVM/ Neural Nets
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+rom keras.models import Sequential
+from keras.layers import Dense
+
+from sklearn.svm import SVR
+from sklearn.feature_selection import RFE
+```
+
+</p>
+</details>
+
+### Nerual Net (NN)
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+model = Sequential()
+model.add(Dense(32, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(1, activation='relu'))
+model.compile(loss='mean_squared_error',
+              optimizer='sgd',
+              metrics=['accuracy'])
+```
+
+Validation MeanAbsoluteError: Mean = 2.113 Std = 0.033
+
+![NN without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_without_Index.png)
+
+Validation MeanAbsoluteError: Mean = 2.071 Std = 0.034
+![NN with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_with_index.png)
+
+</p>
+</details>
+
+### Support Vector Machine (SVM)
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+model = SVR(kernel='linear')
+```
+
+Validation MeanAbsoluteError: Mean = 2.099 Std = 0.037
+
+![SVM linear without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withoutIndex.png)
+
+Validation MeanAbsoluteError: Mean = 2.065 Std = 0.038
+![SVM linear with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withIndex.png)
+
+</p>
+</details>
 
 ## VII. Summary
 
