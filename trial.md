@@ -4,7 +4,7 @@ Principal component analysis (PCA) is a technique used for understanding the dim
 
 In this work we use three different visualization methods to help understand the dimensional structure of the data and reduce the dimensionality of the dataset. 
 
- ### Importing Required Packages and Files
+ ### Running PCA 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
 
@@ -19,15 +19,7 @@ In this work we use three different visualization methods to help understand the
 train = pd.read_csv('extract_train_Jul08.csv')
 train = train.drop(['index'], axis = 1)
 train = train.drop(train.columns[0],axis = 1)
-```
-</p>
-</details>
- 
- ### Running PCA Data
-<details><summary>CLICK TO EXPAND</summary>
-<p>
- 
-```python
+
 scaler=StandardScaler() #instantiate
 scaler.fit(train) # compute the mean and standard which will be used in the next command
 X_scaled=scaler.transform(train)
@@ -65,6 +57,7 @@ The x-axis of the graph below labels each principal component for the featurized
 
 The red line shows the cumulative proportional variance after each principal component is formed. The dashed line is an indication of 99% variance of the data. One can see that the dashed line crosses the cumulative sum (red) line at the 9th principal component. This indicated that 99% of the variance within the data is accounted for when the dimensionality of the data is reduced from 16 dimensions down to 9 dimensions. 
 
+
 ![Principal Components Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/principal_component_visualization.png)
 
  ### Feature Variance for Pricipal Component 1 & 2
@@ -86,7 +79,9 @@ plt.show()
 ```
 </p>
 </details>
+
 The two plots show the contributing variance of each feature in the first and second principal component. Yellow indicates a high positive variance while purple indicates a high negative variance. In the first principal component the features contributing to the most variance are the ‘Roll_std_pXX’ features as well as the “MFCC_mean02” components. In the second principal component the “mean”, “FFT_std_max”, and “index” features contribute to the most variance. Knowing this correlation relationship could provide a framework for identifying the most important features within the model. 
+
 
 ![First Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/first_principal_component.png)
 
@@ -108,6 +103,7 @@ plt.show()
 </details>
 
 The final graph within this section is a heat map which shows the correlation between different features. Dark red indicates that features have a strong positive correlation while dark blue indicates that there is a strong negative correlation. This heat map provides further insight into which features are linearly independent and which variables linearly dependent. For example, the “Roll_std_p60” and “skew” features are linearly independent and have nearly zero correlation between each feature. On the other hand, “Roll_std_60” is correlated strongly with 7 features. 
+
 
 ![Feature Correlation](https://github.com/hoangtung167/cx4240/blob/master/Graphs/heat_map.png)
 
