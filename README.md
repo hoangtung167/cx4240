@@ -876,7 +876,7 @@ Features Importance:
 <p>
   
 ```python
-rom keras.models import Sequential
+from keras.models import Sequential
 from keras.layers import Dense
 
 from sklearn.svm import SVR
