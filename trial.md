@@ -16,7 +16,7 @@
   ```
  </p>
  </details>
- ### Data Upload 
+ ### Data Upload
 <details><summary>CLICK TO EXPAND</summary>
 <p>
 
