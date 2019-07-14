@@ -1,6 +1,6 @@
 ## III. Principal Components Analysis - PCA
 
- ### Importing Required Packages
+ ### Importing Required Packages and Files
 <details><summary>CLICK TO EXPAND</summary>
 <p>
 
@@ -11,15 +11,7 @@
   import pandas as pd
   from sklearn.preprocessing import StandardScaler
   from sklearn.decomposition import PCA
-  ```
- </p>
- </details>
- 
- ### Data Upload
-<details><summary>CLICK TO EXPAND</summary>
-<p>
 
-```python
 train = pd.read_csv('extract_train_Jul08.csv')
 train = train.drop(['index'], axis = 1)
 train = train.drop(train.columns[0],axis = 1)
@@ -27,7 +19,7 @@ train = train.drop(train.columns[0],axis = 1)
 </p>
 </details>
  
- ### Standardize Data for PCA input
+ ### Running PCA Data
 <details><summary>CLICK TO EXPAND</summary>
 <p>
  
@@ -35,21 +27,9 @@ train = train.drop(train.columns[0],axis = 1)
 scaler=StandardScaler() #instantiate
 scaler.fit(train) # compute the mean and standard which will be used in the next command
 X_scaled=scaler.transform(train)
-```
-</p>
-</details>
-
- ### Fitting the PCA (16 principal components)
-<details><summary>CLICK TO EXPAND</summary>
-<p>
- 
-```python
 pca=PCA() 
 pca.fit(X_scaled) 
 X_pca=pca.transform(X_scaled)
-```
-
-```python
 ex_variance=np.var(X_pca,axis=0)
 ex_variance_ratio = ex_variance/np.sum(ex_variance)
 print(ex_variance_ratio)
@@ -60,7 +40,7 @@ print(ex_variance_ratio)
  ### Pricipal Component Proportioanlity
 <details><summary>CLICK TO EXPAND</summary>
 <p>
- 
+
 ```python
 plt.figure(figsize=(10,5))
 plt.bar(np.arange(1,16),pca.explained_variance_ratio_, linewidth=3)
@@ -70,9 +50,6 @@ plt.xlabel('Principal Component')
 plt.ylabel('Variance Proportion')
 plt.grid()
 plt.plot([0.99]*16, '--')
-```
-
-```python
 ex_variance=np.var(X_pca,axis=0)
 ex_variance_ratio = ex_variance/np.sum(ex_variance)
 print(ex_variance_ratio)
