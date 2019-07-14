@@ -272,11 +272,14 @@ X.to_csv('extract_test_Jul08.csv')
 
 ## III. Principal Components Analysis - PCA
 
-## IV. Linear and Polynomial Regression 
-#### Transform data
+## IV. Linear and Polynomial Regression
 <details><summary>CLICK TO EXPAND</summary>
 <p>
-  
+
+### Data Read
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
 ```python
 target = pd.read_csv("extract_label_Jul08.csv", delimiter = ',')
 target = target.as_matrix()
@@ -290,14 +293,17 @@ features = features[:, 1:17]
 </p>
 </details>
 
-#### Help methods
-##### Kfold Cross Validation for Linear and Polynomial Regression
+### Helper methods
 <details><summary>CLICK TO EXPAND</summary>
 <p>
-  
-```python
-def K_Fold(features, target, numfolds, classifier):
 
+#### Kfold Cross Validation for Linear and Polynomial Regression
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+```python
+def K_Fold(features, target, degree, numfolds, classifier):
+    numfolds += 1
     kf = KFold(n_splits=numfolds)
     kf.get_n_splits(features)
 
@@ -307,34 +313,42 @@ def K_Fold(features, target, numfolds, classifier):
     for train_index, test_index in kf.split(features):
         features_train, features_test = features[train_index], features[test_index]
         target_train, target_test = target[train_index], target[test_index]
-    
-        poly = PolynomialFeatures(degree=2)
-        features_poly_train = features_train 
+
+        poly = PolynomialFeatures(degree)
+        features_poly_train = features_train
         features_poly_test = features_test
+
         if classifier == "polynomial" :
             features_poly_train = poly.fit_transform(features_train)
             features_poly_test = poly.fit_transform(features_test)
-        elif classifier == "linear":
-            features_poly_train = features_train 
-            features_poly_test = features_test
-        
+
+
         reg = LinearRegression().fit(features_poly_train, target_train)
+        if classifier == "ridge" :
+            clf = Ridge(alpha=0.001)
+            reg = clf.fit(features_poly_train, target_train)
         if classifier == "linear":
-            if (i < numfolds - 1): 
+            if (i < numfolds - 1):
                 coef[i, :] = reg.coef_.reshape(1, 16)
+        if classifier == "lasso":
+            clf = linear_model.Lasso(alpha=0.1)
+            reg = clf.fit(features_poly_train, target_train)
+        if classifier == "huber":
+            reg = HuberRegressor().fit(features_poly_train, target_train)
+
         i = i+1
         if (i < numfolds):
             mae[i-1] = mean_absolute_error(target_test, reg.predict(features_poly_test))
-            
+
     avrmae = (sum(mae)/(numfolds-1))
     var = (statistics.variance(mae))
-    return avrmae, var, coef
+    return mae, avrmae, var, coef
 ```
 
 </p>
 </details>
 
-##### Gradient mean and variance extraction method
+#### Gradient mean and variance extraction method
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -352,9 +366,16 @@ def mv(coefmat):
 </p>
 </details>
 
-### Linear Regression
+</p>
+</details>
 
-#### Perform linear regression on the data
+### Linear Regression
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+#### Perform Linear Regression on the dataset
+<details><summary>CLICK TO EXPAND</summary>
+<p>
 
 ```python
 reg = LinearRegression().fit(features, target)
@@ -362,25 +383,6 @@ reg = LinearRegression().fit(features, target)
 print("The loss values is: ", mean_absolute_error(target, reg.predict(features)))
 ```
 The loss values is:  2.110853811043013
-
-#### Perfom Kfold cross validation on the data
-
-```python
-i = np.array([5,10,50,100, 150])
-mae = np.zeros(i.shape[0])
-var = np.zeros(i.shape[0])
-for numfold in range(i.shape[0]):
-    m, v = K_Fold(features,target, i[numfold], "linear")
-    mae[numfold] = m
-    var[numfold] = v
-plt.plot(i, mae, color = 'blue', label = 'Average MAE')
-plt.plot(i, var, color = 'red', label = 'Variance of MAE')
-plt.legend(loc='lower right')
-```
-![Linear Regression K Kold](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression%20K%20Fold.png)
-
-
-#### Compare actual and predicted values of the outcome
 
 ```python
 indx = range(target.shape[0])
@@ -391,23 +393,69 @@ plt.xlabel("Index")
 plt.plot(indx, reg.predict(features), linewidth = 3, label = 'Pred')
 plt.plot(indx, target, linewidth = 2, label = 'Actual')
 plt.legend(loc='upper right')
-plt.savefig('Linear Regression.png', dpi = 324)
+plt.savefig('Linear Regression.png', dpi = 199)
 ```
+![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression.png)  
 
+###### Analysis
+From the graph, we see that the linear regression model provide fairly acceptable prediction on the outcome - "Time before failure(s)". However, we can observe the tendency to center the values: the model can not predict high peak an show consistent trend of repeating height - nearly periodic. To combat this situation, we decided to use two different approaches: first is to use different type of regressor and compare and validate them using Kfold cross-validation, second is to use the polynomial regression. We suspect that there is no significant improvement when using different types of linear regression as all of them have a tendency to center the values.
 
-![Linear Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression.png)
+</p>
+</details>
 
-#### Feature Importance
-
+#### Compare different types of regression models
 <details><summary>CLICK TO EXPAND</summary>
 <p>
-  
+
 ```python
-fl = ['index', 'mean', 'std', 'skew', 'FFT_mean_real', 'FFT_mean_imag', 
-     'FFT_std_real', 'FFT_std_max', 'Roll_std_p05', 'Roll_std_p30', 
-      'Roll_std_p60', 'Roll_std_absDiff', 'Roll_mean_p05', 
+fl = ['Linear', 'Ridge', 'Lasso', 'Huber Regressor']
+## coeff = reg.coef_.shape
+materials = fl
+x_pos = np.arange(len(fl))
+t1, m, v, c = K_Fold(features,target,degree = 1, numfolds = 5, classifier = "linear")
+t2, m1, v1, c1 = K_Fold(features,target,degree = 1, numfolds = 5, classifier = "ridge")
+t3, m2, v2, c2 = K_Fold(features,target,degree = 1, numfolds = 5, classifier = "lasso")
+t4, m3, v3, c3 = K_Fold(features,target,degree = 1, numfolds = 5, classifier = "huber")
+tot = np.append(np.append(np.append(t1,t2), t3), t4)
+mae = [m, m1, m2, m3]
+var = [v, v1, v2, v3]
+CTEs = mae
+error = var
+# Build the plot
+fig, ax = plt.subplots()
+ax.bar(x_pos, CTEs, yerr=error, align='center', color = ['black', 'red', 'green', 'blue', 'cyan'], alpha=0.5, ecolor='black', capsize=10)
+ax.set_ylabel('Mean Absolute Error')
+ax.set_xlabel('Types of Regressor')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(materials)
+ax.set_title('KFold Mean Absolute Error Values with Variances')
+ax.yaxis.grid(True)
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('Linear Regression K Fold.png', dpi = 199)
+plt.show()
+```
+![Linear Regression K Fold](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression%20K%20Fold.png)
+
+##### Analysis
+Just as what we predicted, using other types of regressor such as Ridge, Lasso, and Huber Regressor do not increase accuracy significantly. Specially, we event observe a worst model with Huber Regressor: higher Mean Absolute Error with higher variance
+
+</p>
+</details>
+
+#### Feature Importance
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+We output and graphs the coefficients in the weight from linear regression model corresponding to features. This graphs will be able to tell us the gradient values of features and thus their respective importance.
+
+```python
+fl = ['index', 'mean', 'std', 'skew', 'FFT_mean_real', 'FFT_mean_imag',
+     'FFT_std_real', 'FFT_std_max', 'Roll_std_p05', 'Roll_std_p30',
+      'Roll_std_p60', 'Roll_std_absDiff', 'Roll_mean_p05',
       'Roll_mean_absDiff', 'MFCC_mean02', 'MFCC_mean16']
-m, v, c = K_Fold(features,target, 100, "linear")
+t, m, v, c = K_Fold(features,target, degree = 1, numfolds = 5, classifier = "linear")
 mean, error = mv(c)
 ## coeff = reg.coef_.shape
 materials = fl
@@ -425,18 +473,67 @@ ax.yaxis.grid(True)
 
 # Save the figure and show
 plt.tight_layout()
-plt.savefig('bar_plot_with_error_bars.png', dpi = 324)
+plt.savefig('bar_plot_with_error_bars.png', dpi = 199)
 plt.show()
 ```
+![Bar bar_plot_with_error_bars](https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png)
 
 </p>
 </details>
 
-![Feature Importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png)
+</p>
+</details>
 
 ### Polynomial Regression
-#### Perform polynomial regression on the data
- 
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+#### Perform K-Fold to analyze and determine optimal degree
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+```python
+fl = ['1','2','3','4']
+i = np.array([1,2,3,4])
+## coeff = reg.coef_.shape
+materials = fl
+x_pos = np.arange(len(fl))
+tot = np.zeros(1)
+mae = np.zeros(i.shape[0])
+var = np.zeros(i.shape[0])
+for numfold in range(i.shape[0]):
+    t, m, v, c = K_Fold(features,target, degree = i[numfold], numfolds = 5, classifier = "polynomial")
+    mae[numfold] = m
+    var[numfold] = v
+    tot = np.append(tot, t, axis = 0)
+CTEs = mae
+error = var
+# Build the plot
+fig, ax = plt.subplots()
+ax.bar(x_pos, CTEs, yerr=error, align='center', color = ['black', 'red', 'green', 'blue', 'cyan'], alpha=0.5, ecolor='black', capsize=10)
+ax.set_ylabel('Mean Absolute Error')
+ax.set_xlabel('Degree Levels')
+ax.set_xticks(x_pos)
+ax.set_xticklabels(materials)
+ax.set_title('KFold Mean Absolute Error Values with Variances')
+ax.yaxis.grid(True)
+tot = np.delete(tot, 0)
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('Polynomial K Fold.png', dpi = 199)
+plt.show()
+```
+![Polynomial K Fold](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20K%20Fold.png)
+
+##### Analysis
+From the graph, we can observe that the Mean Absolute Error has a tendency to increase with degree levels. Furthermore, the variance also increases significantly which implies that we may overfit the data with higher order models. Since degree equals 1 is the Linear Regression model, we decide to use degree of 2 to continue our analysis.
+
+</p>
+</details>
+#### Perform Polynomial Regression with Degree of 2
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
 ```python
 poly = PolynomialFeatures(degree=2)
 features_poly = poly.fit_transform(features)
@@ -445,40 +542,115 @@ reg = LinearRegression().fit(features_poly, target)
 print("The loss values is: ", mean_absolute_error(target, reg.predict(features_poly)))
 ```
 The loss values is:  1.985654086901071
-
-#### Perfom Kfold cross validation on the data
-
-```python
-i = np.array([5,10,50,100, 150])
-mae = np.zeros(i.shape[0])
-var = np.zeros(i.shape[0])
-for numfold in range(i.shape[0]):
-    m, v = K_Fold(features,target, i[numfold], "linear")
-    mae[numfold] = m
-    var[numfold] = v
-plt.plot(i, mae, color = 'blue', label = 'Average MAE')
-plt.plot(i, var, color = 'red', label = 'Variance of MAE')
-plt.legend(loc='lower right')
-```
-![Polynomial Regression K Fold](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression%20K%20Fold.png)
-
-
-#### Compare actual and predicted values of the outcome
-
 ```python
 indx = range(target.shape[0])
 plt.axis([0, target.shape[0], -0.1, 16])
 plt.title("Comparison between predicted and actual target values")
-plt.ylabel("Target Values")
-plt.xlabel("Trial Number")
-plt.plot(indx, reg.predict(features_poly), linewidth = 3)
-plt.plot(indx, target, linewidth = 2)
+plt.ylabel("Time before failures")
+plt.xlabel("Index")
+plt.plot(indx, reg.predict(features_poly), linewidth = 3, label = 'Pred')
+plt.plot(indx, target, linewidth = 2, label = 'Actual')
+plt.legend(loc='upper right')
+plt.savefig('Polynomial Regression.png', dpi = 199)
 ```
-
-
 ![Polynomial Regression](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20Regression.png)
+</p>
+</details>
 
-### Comparision between Linear and Polynomial Regression
+</p>
+</details>
+
+### Comparison between Linear and Polynomial Regression
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+#### Compare the Mean Absolute Error
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+```python
+fl = ['Linear Regression', 'Polynomial Regression']
+t1, m1, v1, c1 = K_Fold(features,target, degree = 1, numfolds = 5, classifier = "linear")
+t2, m2, v2, c2 = K_Fold(features,target, degree = 2, numfolds = 5, classifier = "polynomial")
+mae = np.append(m1, m2)
+var = np.append(v1,v2)
+## coeff = reg.coef_.shape
+materials = fl
+x_pos = np.arange(len(fl))
+CTEs = mae
+error = var
+# Build the plot
+fig, ax = plt.subplots(1,2,figsize =(9,3))
+ax[0].bar(x_pos, CTEs, yerr=error, align='center', color = ['red', 'green'], alpha=0.5, ecolor='black', capsize=10)
+ax[0].set_ylim(0, 3)
+ax[0].set_ylabel('Mean Absolute Error')
+ax[0].set_xticks(x_pos)
+ax[0].set_xticklabels(materials)
+ax[0].set_title('Kfold results')
+ax[0].yaxis.grid(True)
+
+CTEs = [2.110853811043013, 1.985654086901071]
+
+ax[1].bar(x_pos, CTEs, align='center', color = ['red', 'green'], alpha=0.5, ecolor='black', capsize=10)
+ax[1].set_ylim(0, 3)
+ax[1].set_ylabel('Mean Absolute Error')
+ax[1].set_xticks(x_pos)
+ax[1].set_xticklabels(materials)
+ax[1].set_title('Training the whole set')
+ax[1].yaxis.grid(True)
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('Compare MAE Linear Polynomial.png', dpi = 199)
+plt.show()
+```
+![Compare MAE](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20MAE%20Linear%20Polynomial.png)
+
+</p>
+</details>
+
+#### Compare the Predicted Results
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+
+```python
+reg = LinearRegression().fit(features, target)
+
+indx = range(target.shape[0])
+plt.axis([0, target.shape[0], -0.1, 16])
+plt.title("Comparison - Linear Regression")
+plt.ylabel("Time before failure(s)")
+plt.xlabel("Index")
+plt.plot(indx, reg.predict(features), linewidth = 3, label = 'Pred')
+plt.plot(indx, target, linewidth = 2, label = 'Actual')
+plt.legend(loc='upper right')
+plt.savefig('Compare P Linear.png', dpi = 324)
+plt.show()
+
+poly = PolynomialFeatures(degree=2)
+features_poly = poly.fit_transform(features)
+reg = LinearRegression().fit(features_poly, target)
+
+indx = range(target.shape[0])
+plt.axis([0, target.shape[0], -0.1, 16])
+plt.title("Comparison - Polynomial Regression")
+plt.ylabel("Time before failure(s)")
+plt.xlabel("Index")
+plt.plot(indx, reg.predict(features_poly), linewidth = 3, label = 'Pred')
+plt.plot(indx, target, linewidth = 2, label = 'Actual')
+plt.legend(loc='upper right')
+plt.savefig('Compare P Polynomial.png', dpi = 324)
+plt.show()
+```
+![Comapare Predicted Values](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20Predicted%20Values.png)
+</p>
+</details>
+
+</p>
+</details>
+
+</p>
+</details>
 
 
 ## V. Decision Tree/ Random Forest / LGB Classifier
