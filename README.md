@@ -273,7 +273,7 @@ X.to_csv('extract_test_Jul08.csv')
 ## III. Principal Components Analysis - PCA
 
 ## IV. Linear and Polynomial Regression
-<details><summary>CLICK TO EXPAND</summary>
+<details><summary>Data Read and Helper Methods</summary>
 <p>
 
 ### Data Read
@@ -362,6 +362,9 @@ def mv(coefmat):
         var[i] = np.std(coefmat[:, i])
     return mean, var
 ```
+
+</p>
+</details>
 
 </p>
 </details>
@@ -643,9 +646,6 @@ plt.savefig('Compare P Polynomial.png', dpi = 324)
 plt.show()
 ```
 ![Comapare Predicted Values](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20Predicted%20Values.png)
-</p>
-</details>
-
 </p>
 </details>
 
