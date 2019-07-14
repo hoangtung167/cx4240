@@ -1,7 +1,5 @@
 ## III. Principal Components Analysis - PCA
-<details><summary>CLICK TO EXPAND</summary>
-<p>
- 
+
  ### Importing Required Packages
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -59,6 +57,8 @@ print(ex_variance_ratio)
 </p>
 </details>
 
+![Feature Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Visualization.png)
+
  ### Pricipal Component Proportioanlity
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -82,6 +82,8 @@ print(ex_variance_ratio)
 </p>
 </details>
 
+![Principal Components Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/principal_component_visualization.png)
+
  ### Feature Variance for Pricipal Component 1 & 2
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -102,6 +104,9 @@ plt.show()
 </p>
 </details>
 
+![First Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/first_principal_component.png)
+![second Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/second_principal_component.png)
+
  ### Visualizing Feature Correlation
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -116,6 +121,8 @@ plt.show()
 ```
 </p>
 </details>
+
+![Feature Correlation](https://github.com/hoangtung167/cx4240/blob/master/Graphs/heat_map.png)
 
  ### Saving Reduced Dimensionality Matrix and Feature Importance
 <details><summary>CLICK TO EXPAND</summary>
@@ -139,5 +146,3 @@ df.to_csv('pca_exported_9features.csv')
 </p>
 </details>
 
-</p>
-</details>
