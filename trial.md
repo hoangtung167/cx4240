@@ -33,7 +33,7 @@ print(ex_variance_ratio)
 </p>
 </details>
 
- ### Pricipal Component Proportioanlity
+ ### Pricipal Component Proportionality
 <details><summary>CLICK TO EXPAND</summary>
 <p>
 
@@ -60,7 +60,7 @@ The red line shows the cumulative proportional variance after each principal com
 
 ![Principal Components Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/principal_component_visualization.png)
 
- ### Feature Variance for Pricipal Component 1 & 2
+ ### Feature Variance for Principal Components 1 & 2
 <details><summary>CLICK TO EXPAND</summary>
 <p>
  
