@@ -57,8 +57,6 @@ print(ex_variance_ratio)
 </p>
 </details>
 
-![Feature Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Visualization.png)
-
  ### Pricipal Component Proportioanlity
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -105,6 +103,7 @@ plt.show()
 </details>
 
 ![First Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/first_principal_component.png)
+
 ![second Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/second_principal_component.png)
 
  ### Visualizing Feature Correlation
