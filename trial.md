@@ -1,5 +1,9 @@
 ## III. Principal Components Analysis - PCA
 
+Principal component analysis (PCA) is a technique used for understanding the dimensional structure of a data set. PCA transforms data in a way that converts a set of orthogonally correlated observations into a set of linearly uncorrelated variables called principal components.  This transformation maximizes the largest possible variances for each principal component. There can be as many principle components are there are feature dimensions in the data set. Each principal component accounts for the largest possible variance between entries. 
+
+In this work we use three different visualization methods to help understand the dimensional structure of the data and reduce the dimensionality of the dataset. 
+
  ### Importing Required Packages and Files
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -57,6 +61,10 @@ print(ex_variance_ratio)
 </p>
 </details>
 
+The x-axis of the graph below labels each principal component for the featurized data set, while the y-axis accounts for the proportionality of the total variance contained within the data set. As expected, the first principal component accounts for the largest amount of variance. Each consecutive principal component accounts for more variance than the one after it. 
+
+The red line shows the cumulative proportional variance after each principal component is formed. The dashed line is an indication of 99% variance of the data. One can see that the dashed line crosses the cumulative sum (red) line at the 9th principal component. This indicated that 99% of the variance within the data is accounted for when the dimensionality of the data is reduced from 16 dimensions down to 9 dimensions. 
+
 ![Principal Components Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/principal_component_visualization.png)
 
  ### Feature Variance for Pricipal Component 1 & 2
@@ -78,6 +86,7 @@ plt.show()
 ```
 </p>
 </details>
+The two plots show the contributing variance of each feature in the first and second principal component. Yellow indicates a high positive variance while purple indicates a high negative variance. In the first principal component the features contributing to the most variance are the ‘Roll_std_pXX’ features as well as the “MFCC_mean02” components. In the second principal component the “mean”, “FFT_std_max”, and “index” features contribute to the most variance. Knowing this correlation relationship could provide a framework for identifying the most important features within the model. 
 
 ![First Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/first_principal_component.png)
 
@@ -97,6 +106,8 @@ plt.show()
 ```
 </p>
 </details>
+
+The final graph within this section is a heat map which shows the correlation between different features. Dark red indicates that features have a strong positive correlation while dark blue indicates that there is a strong negative correlation. This heat map provides further insight into which features are linearly independent and which variables linearly dependent. For example, the “Roll_std_p60” and “skew” features are linearly independent and have nearly zero correlation between each feature. On the other hand, “Roll_std_60” is correlated strongly with 7 features. 
 
 ![Feature Correlation](https://github.com/hoangtung167/cx4240/blob/master/Graphs/heat_map.png)
 
