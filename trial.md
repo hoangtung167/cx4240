@@ -1,8 +1,8 @@
-## III. Principal Components Analysis - PCA
+## III. Principal Component Analysis - PCA
 
-Principal component analysis (PCA) is a technique used for understanding the dimensional structure of a data set. PCA transforms data in a way that converts a set of orthogonally correlated observations into a set of linearly uncorrelated variables called principal components.  This transformation maximizes the largest possible variances for each principal component. There can be as many principle components are there are feature dimensions in the data set. Each principal component accounts for the largest possible variance between entries. 
+Principal component analysis (PCA) is a technique used for understanding the dimensional structure of a data set. PCA transforms data in a way that converts a set of orthogonally correlated observations into a set of linearly uncorrelated variables called principal components.  This transformation maximizes the largest possible variance between each principal component.
 
-In this work we use three different visualization methods to help understand the dimensional structure of the data and reduce the dimensionality of the dataset. 
+In this work we use three different visualization methods to help understand the dimensional structure of the data and reduce the dimensionality of the dataset using PCA. 
 
  ### Running PCA 
 <details><summary>CLICK TO EXPAND</summary>
@@ -16,19 +16,19 @@ In this work we use three different visualization methods to help understand the
   from sklearn.preprocessing import StandardScaler
   from sklearn.decomposition import PCA
 
-train = pd.read_csv('extract_train_Jul08.csv')
-train = train.drop(['index'], axis = 1)
-train = train.drop(train.columns[0],axis = 1)
+  train = pd.read_csv('extract_train_Jul08.csv')
+  train = train.drop(['index'], axis = 1)
+  train = train.drop(train.columns[0],axis = 1)
 
-scaler=StandardScaler() #instantiate
-scaler.fit(train) # compute the mean and standard which will be used in the next command
-X_scaled=scaler.transform(train)
-pca=PCA() 
-pca.fit(X_scaled) 
-X_pca=pca.transform(X_scaled)
-ex_variance=np.var(X_pca,axis=0)
-ex_variance_ratio = ex_variance/np.sum(ex_variance)
-print(ex_variance_ratio)
+  scaler=StandardScaler() #instantiate
+  scaler.fit(train) # compute the mean and standard which will be used in the next command
+  X_scaled=scaler.transform(train)
+  pca=PCA() 
+  pca.fit(X_scaled) 
+  X_pca=pca.transform(X_scaled)
+  ex_variance=np.var(X_pca,axis=0)
+  ex_variance_ratio = ex_variance/np.sum(ex_variance)
+  print(ex_variance_ratio)
 ```
 </p>
 </details>
@@ -53,7 +53,7 @@ print(ex_variance_ratio)
 </p>
 </details>
 
-The x-axis of the graph below labels each principal component for the featurized data set, while the y-axis accounts for the proportionality of the total variance contained within the data set. As expected, the first principal component accounts for the largest amount of variance. Each consecutive principal component accounts for more variance than the one after it. 
+The x-axis of the graph below indicated each principal component for the featurized data set, while the y-axis accounts for the proportionality of the total variance contained within the data set. As expected, the first principal component accounts for the largest amount of variance. Each consecutive principal component accounts for slightly less variance than component before it. 
 
 The red line shows the cumulative proportional variance after each principal component is formed. The dashed line is an indication of 99% variance of the data. One can see that the dashed line crosses the cumulative sum (red) line at the 9th principal component. This indicated that 99% of the variance within the data is accounted for when the dimensionality of the data is reduced from 16 dimensions down to 9 dimensions. 
 
@@ -80,7 +80,7 @@ plt.show()
 </p>
 </details>
 
-The two plots show the contributing variance of each feature in the first and second principal component. Yellow indicates a high positive variance while purple indicates a high negative variance. In the first principal component the features contributing to the most variance are the ‘Roll_std_pXX’ features as well as the “MFCC_mean02” components. In the second principal component the “mean”, “FFT_std_max”, and “index” features contribute to the most variance. Knowing this correlation relationship could provide a framework for identifying the most important features within the model. 
+The two plots show the contributing variance of each feature in the first and second principal components. Yellow indicates a high positive variance while purple indicates a high negative variance. In the first principal component the features contributing to the most variance are the ‘Roll_std_pXX’ features as well as the “MFCC_mean02” feature. In the second principal component the “mean”, “FFT_std_max”, and “index” features contribute to the most variance. Knowing this correlation relationship could provide a framework for identifying the features providing the most significant variation within the model. 
 
 
 ![First Principal Component](https://github.com/hoangtung167/cx4240/blob/master/Graphs/first_principal_component.png)
@@ -102,7 +102,7 @@ plt.show()
 </p>
 </details>
 
-The final graph within this section is a heat map which shows the correlation between different features. Dark red indicates that features have a strong positive correlation while dark blue indicates that there is a strong negative correlation. This heat map provides further insight into which features are linearly independent and which variables linearly dependent. For example, the “Roll_std_p60” and “skew” features are linearly independent and have nearly zero correlation between each feature. On the other hand, “Roll_std_60” is correlated strongly with 7 features. 
+The final graph within this section is a heat map which shows the correlation between different features. Dark red indicates that features have a strong positive correlation while dark blue indicates that there is a strong negative correlation between features. This heat map provides insight into which features are linearly independent and which variables linearly dependent. For example, the “Roll_std_p60” and “skew” features are linearly independent and have nearly zero correlation with other features. On the other hand, “Roll_std_60” is strongly correlated with 7 other features. 
 
 
 ![Feature Correlation](https://github.com/hoangtung167/cx4240/blob/master/Graphs/heat_map.png)
