@@ -533,6 +533,7 @@ From the graph, we can observe that the Mean Absolute Error has a tendency to in
 
 </p>
 </details>
+
 #### Perform Polynomial Regression with Degree of 2
 <details><summary>CLICK TO EXPAND</summary>
 <p>
