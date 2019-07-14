@@ -3,8 +3,6 @@
 <p>
  
  ### Importing Required Packages
-<details><summary>CLICK TO EXPAND</summary>
-<p>
   ```python
   import numpy as np
   import seaborn as sns
@@ -13,8 +11,6 @@
   from sklearn.preprocessing import StandardScaler
   from sklearn.decomposition import PCA
   ```
-</p>
-</details>
  ### Data Upload 
 
 ```python
@@ -22,8 +18,6 @@ train = pd.read_csv('extract_train_Jul08.csv')
 train = train.drop(['index'], axis = 1)
 train = train.drop(train.columns[0],axis = 1)
 ```
-</p>
-</details>
  ### Standardize Data for PCA input
 
 ```python
@@ -31,8 +25,6 @@ scaler=StandardScaler() #instantiate
 scaler.fit(train) # compute the mean and standard which will be used in the next command
 X_scaled=scaler.transform(train)
 ```
-</p>
-</details>
  ### Fitting the PCA (16 principal components)
 
 ```python
@@ -46,8 +38,6 @@ ex_variance=np.var(X_pca,axis=0)
 ex_variance_ratio = ex_variance/np.sum(ex_variance)
 print(ex_variance_ratio)
 ```
-</p>
-</details>
  ### Pricipal Component Proportioanlity
 
 ```python
@@ -66,9 +56,6 @@ ex_variance=np.var(X_pca,axis=0)
 ex_variance_ratio = ex_variance/np.sum(ex_variance)
 print(ex_variance_ratio)
 ```
-</p>
-</details>
-
  ### Feature Variance for Pricipal Component 1 & 2
 
 ```python
@@ -84,8 +71,6 @@ plt.colorbar()
 plt.xticks(range(len(train.columns)),train.columns,rotation=65,ha='left')
 plt.show()
 ```
-</p>
-</details>
  ### Visualizing Feature Correlation
 ```python
 features = test.columns
