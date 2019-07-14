@@ -16,6 +16,7 @@
   ```
  </p>
  </details>
+ 
  ### Data Upload
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -27,8 +28,8 @@ train = train.drop(train.columns[0],axis = 1)
 ```
 </p>
 </details>
+ 
  ### Standardize Data for PCA input
-
 <details><summary>CLICK TO EXPAND</summary>
 <p>
  
@@ -39,6 +40,7 @@ X_scaled=scaler.transform(train)
 ```
 </p>
 </details>
+
  ### Fitting the PCA (16 principal components)
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -56,6 +58,7 @@ print(ex_variance_ratio)
 ```
 </p>
 </details>
+
  ### Pricipal Component Proportioanlity
 <details><summary>CLICK TO EXPAND</summary>
 <p>
@@ -78,8 +81,8 @@ print(ex_variance_ratio)
 ```
 </p>
 </details>
- ### Feature Variance for Pricipal Component 1 & 2
 
+ ### Feature Variance for Pricipal Component 1 & 2
 <details><summary>CLICK TO EXPAND</summary>
 <p>
  
@@ -113,6 +116,7 @@ plt.show()
 ```
 </p>
 </details>
+
  ### Saving Reduced Dimensionality Matrix and Feature Importance
 <details><summary>CLICK TO EXPAND</summary>
 <p>
