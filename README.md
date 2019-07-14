@@ -269,8 +269,6 @@ X.to_csv('extract_test_Jul08.csv')
 </p>
 </details>
 
-
-## III. Principal Components Analysis - PCA
 ## III. Principal Component Analysis - PCA
 
 Principal component analysis (PCA) is a technique used for understanding the dimensional structure of a data set. PCA transforms data in a way that converts a set of orthogonally correlated observations into a set of linearly uncorrelated variables called principal components.  This transformation maximizes the largest possible variance between each principal component.
