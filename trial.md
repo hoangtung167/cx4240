@@ -201,19 +201,33 @@ plt.subplots_adjust(wspace=0.5, hspace=0.3)
 
 ### Linear Regression and Polynomial Regression Performance
 
-Analysis began with linear and polynomial regression. With in the linear regression framework, ltiple methods were tested- Ridge, Lasso, and Huber Regressor. For the polynomial model we fit the model to a 2nd degree polynomial. 
+Analysis began with linear and polynomial regression. With in the linear regression framework, multiple methods were tested- Ridge, Lasso, and Huber Regressor. For the polynomial model we fit the model to a 2nd degree polynomial. 
 
 The linear regression model provide fairly acceptable prediction for "time before failure". However, the model was unable to predict high peaks and yields a consistent trend of repeating height - nearly periodic. The polynomial regression model yields nearly identical resuts to the linear regression model, but displays a slightly larger error.
 
 From the graphs below, we can observe that the Mean Absolute Error has a tendency to increase as the polynomial degree is increased. Furthermore, the variance increases significantly as the polynomial degree is increased. This likely indicates that overfitting has occured. Ultimately we decide to use 2nd degree polynomial to build a model (1st degree polynomial is simply a linear function). 
 
 <p align="center">
+  <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression%20K%20Fold.png">
+</p>
+
+<p align="center">
+  <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20K%20Fold.png">
+</p>
+
+<p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20Predicted%20Values.png">
 </p>
+
 <p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20MAE%20Linear%20Polynomial.png">
 </p>
 
+<p align="center">
+  <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png">
+</p>
+
+https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png
 To yield better results, we turned to more complex modeling methods: Support Vector Machines, Neural Networks, Decision Trees, Random Forest, and LGB Classifier. These models are addressed below.  
 
 #### Linear and Polynomial Regression Analysis
