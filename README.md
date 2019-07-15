@@ -787,7 +787,69 @@ plt.show()
 </details>
 
 
-## V. Decision Tree/ Random Forest / LGB Classifier
+## V. SVM/ Neural Nets
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+from keras.models import Sequential
+from keras.layers import Dense
+
+from sklearn.svm import SVR
+from sklearn.feature_selection import RFE
+```
+
+</p>
+</details>
+
+### Nerual Net (NN)
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+model = Sequential()
+model.add(Dense(32, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(1, activation='relu'))
+model.compile(loss='mean_squared_error',
+              optimizer='sgd',
+              metrics=['accuracy'])
+```
+
+Validation MeanAbsoluteError: Mean = 2.113 Std = 0.033
+
+![NN without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_without_Index.png)
+
+Validation MeanAbsoluteError: Mean = 2.071 Std = 0.034
+![NN with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_with_index.png)
+
+</p>
+</details>
+
+### Support Vector Machine (SVM)
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+model = SVR(kernel='linear')
+```
+
+Validation MeanAbsoluteError: Mean = 2.099 Std = 0.037
+
+![SVM linear without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withoutIndex.png)
+
+Validation MeanAbsoluteError: Mean = 2.065 Std = 0.038
+![SVM linear with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withIndex.png)
+
+```python
+model = SVR(kernel='rbf')
+```
+
+
+</p>
+</details>
+
+## VI. Decision Tree/ Random Forest / LGB Classifier
 
 We use 3 different types of Tree-Classifier for this classification.
 
@@ -873,68 +935,6 @@ Cross Validation score for 5 folds:
 Features Importance:
 ![Tree_feature_importance](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Tree_feature_importance.png)
   
-</p>
-</details>
-
-## VI. SVM/ Neural Nets
-<details><summary>CLICK TO EXPAND</summary>
-<p>
-  
-```python
-from keras.models import Sequential
-from keras.layers import Dense
-
-from sklearn.svm import SVR
-from sklearn.feature_selection import RFE
-```
-
-</p>
-</details>
-
-### Nerual Net (NN)
-<details><summary>CLICK TO EXPAND</summary>
-<p>
-  
-```python
-model = Sequential()
-model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
-model.add(Dense(1, activation='relu'))
-model.compile(loss='mean_squared_error',
-              optimizer='sgd',
-              metrics=['accuracy'])
-```
-
-Validation MeanAbsoluteError: Mean = 2.113 Std = 0.033
-
-![NN without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_without_Index.png)
-
-Validation MeanAbsoluteError: Mean = 2.071 Std = 0.034
-![NN with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_with_index.png)
-
-</p>
-</details>
-
-### Support Vector Machine (SVM)
-<details><summary>CLICK TO EXPAND</summary>
-<p>
-  
-```python
-model = SVR(kernel='linear')
-```
-
-Validation MeanAbsoluteError: Mean = 2.099 Std = 0.037
-
-![SVM linear without Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withoutIndex.png)
-
-Validation MeanAbsoluteError: Mean = 2.065 Std = 0.038
-![SVM linear with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withIndex.png)
-
-```python
-model = SVR(kernel='rbf')
-```
-
-
 </p>
 </details>
 
