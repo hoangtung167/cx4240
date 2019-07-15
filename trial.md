@@ -172,6 +172,27 @@ The resulting table is as follows:
 | 3  | 3     | 4.90224  | 6.922305 | 0.757278 | 5             | -1.07E-15     | 2685.789     | 735336      | 2.496442     | 2.863141     | 3.442515     | -8.68E-06        | 4.16          | -5.34E-07         | -25.5651    | 5.241189    |
 
 
+<details><summary>Visualization of all 16 features</summary>
+<p>
+  
+### Visualization of 16 features
+```python
+X1, y1 = X.iloc[500:1000], y.iloc[500:1000]
+
+plt.figure(figsize=(15, 15))
+for i, col in enumerate(X.columns):
+    ax1 = plt.subplot(4, 4, i + 1)
+    plt.plot(X1[col], color='blue');plt.title(col);ax1.set_ylabel(col, color='b')
+    ax2 = ax1.twinx(); plt.plot(y1, color='g'); ax2.set_ylabel('time_to_failure', color='g')
+    ax1.legend(loc= 2);ax2.legend(['time_to_failure'], loc=1)
+plt.subplots_adjust(wspace=0.5, hspace=0.3)
+```
+ ![Feature Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Visualization.png)
+ 
+</p>
+</details>
+
+
 ## III. Testing Maching Learning Models
 
 ### Linear Regression and Polynomial Regression Performance
