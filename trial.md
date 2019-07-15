@@ -1,3 +1,8 @@
+# Los Alamos National Laboratory Earthquake Prediction
+
+#### Huy Thong Nguyen, Tung Hoang, Jordan Lightstone, Danial Huff
+#### CX4240 Project
+
 ## I. Problem statements
 
 Earthquakes are devastating natural disasters and possess the potential to destroy buildings and cities. In the process they can injure and even kill hundreds and thousands of people. It is necessary to develop solutions to better understand seismic activity. Futher more, it is a priority to develop tools capable of the accurate and precise prediction of when an earthquake will happen. Prediction tools of this nature could equip officials with the necessary information to advice about development plans and safty propocals long before these events occur. 
@@ -633,6 +638,14 @@ df.to_csv('pca_exported_9features.csv')
 </p>
 </details>
 
+### PCA with LGBM
+
+Since we identify the LBGM achieves the highest 5fold Cross Validation score, we apply PCA with dimensionality reduction on the dataset.
+Clearly shown on the graph is that we achieve similar performance with dimension = 10 compared to dimension = 16.
+
+![LGBM_PCA](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LGBM_PCA.png)
+
+
 ## VI. Summary
 
 #### Comparing the feature importance across methods
@@ -642,3 +655,13 @@ df.to_csv('pca_exported_9features.csv')
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/CSV%20Files/Summary_Feature_Importance.png">
 </p>
 
+
+## VIII. References
+
+[1]	Rouet‐Leduc et al. Machine learning predicts laboratory earthquakes. Geophysical Research Letters, (2017) https://doi.org/10.1002/2017GL074677
+
+[2]	Claudia Hulbert et al. Similarity of fast and slow earthquakes illuminated by Machine Learning, Nature Geoscience (2018). DOI: 10.1038/s41561-018-0272-8 
+
+[3]	https://www.kaggle.com/c/LANL-Earthquake-Prediction/data
+
+[4]	Breiman, L. (2001). Random forests. Machine Learning, 45(1), 532. https://doi.org/10.1023/A:1010933404324
