@@ -141,7 +141,7 @@ plt.subplots_adjust(wspace=0.5, hspace=0.3)
 
 ### Feature Extractions for Earthquake data
 
-Since the training data is a large csv file (9.5GB), which exceeds the computation capability of our laptop, we use the pandas with `chunksize = 150000` to load one time-series windown at one. At each time window, 150_000 input data is transformed into 16 dimensional vectors (16 features) and append to input dataframe. The target is the `time before failure` is also appended to a separate dataframe.
+Since the training data is a large csv file (9.5GB), which exceeds the computation capability of our laptop, we use the pandas with `chunksize = 150000` to load one time-series windown at one. At each time window, 150_000 input data is transformed into 16 dimensional vectors (16 features) and append to input dataframe. The target is the `time before failure` is also appended to a separate dataframe. In total, we transform from `150_000*4196` acoustic data to `4196` data points, each is a 16 dimensional vector. 
 
 <details><summary>CLICK TO EXPAND</summary>
 <p>
