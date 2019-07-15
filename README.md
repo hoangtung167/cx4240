@@ -946,3 +946,10 @@ Features Importance:
 #### Compare the feature importance across methods
 
 ![Summary_Feature_Importance](https://github.com/hoangtung167/cx4240/blob/master/CSV%20Files/Summary_Feature_Importance.png)
+
+## VIII. References
+
+[1]	Rouet‐Leduc et al. Machine learning predicts laboratory earthquakes. Geophysical Research Letters, (2017) https://doi.org/10.1002/2017GL074677
+[2]	Claudia Hulbert et al. Similarity of fast and slow earthquakes illuminated by Machine Learning, Nature Geoscience (2018). DOI: 10.1038/s41561-018-0272-8 
+[3]	https://www.kaggle.com/c/LANL-Earthquake-Prediction/data
+[4]	Breiman, L. (2001). Random forests. Machine Learning, 45(1), 532. https://doi.org/10.1023/A:1010933404324
