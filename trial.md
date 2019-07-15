@@ -1,6 +1,6 @@
 # Los Alamos National Laboratory Earthquake Prediction
 
-#### Huy Thong Nguyen, Tung Hoang, Jordan Lightstone, Danial Huff
+#### Huy Thong Nguyen, Tung Hoang, Jordan Lightstone, Daniel Huff
 #### CX4240 Project
 
 ## I. Problem statements
@@ -501,8 +501,15 @@ NN Validation (index) MeanAbsoluteError: Mean = 2.071 Std = 0.034
 
 ### Support Vector Machine (SVM)
   
-SVM Validation (index) MeanAbsoluteError: Mean = 2.065 Std = 0.038
+SVM with linear Kernel Validation (index) MeanAbsoluteError: Mean = 2.065 Std = 0.038
 ![SVM linear with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withIndex.png)
+
+SVM with rbf Kernel Validation (index) MeanAbsoluteError: Mean = 1.987 Std = 0.030
+![SVM rbf with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/svm_rbf_index.png)
+
+### Comparing SVM vs. NN
+
+![SVM NN Comp](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_NN_Comparison.png)
 
 #### Building NN and SVM
 
