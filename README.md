@@ -64,8 +64,6 @@ import statistics
 </details>
 
 ## II. Feature Extraction
-<details><summary>CLICK TO EXPAND</summary>
-<p>
 
 From the 150_000 acoustic data containing “random” number, we transform this entire time-series window (each has 150_000 data) into 16 statistical features. The features is selected based on the following public release:
 [link1](https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/94390#latest-554034)
@@ -77,6 +75,9 @@ From the 150_000 acoustic data containing “random” number, we transform this
 
 ![Feature Extraction Concept](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Extraction_Concept.png)
 
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
 **Basic features (4 features) 
 ‘Index’, ‘mean’, ‘std’, ‘skew’**  
 From 150_000 data, we report the time when the signal is recorded (‘Index’), a single mean value (‘mean’), standard deviation (‘std’), and skew (‘skew’).
@@ -175,6 +176,9 @@ def generate_feature_Melfrequency(seg_id, seg, X):
 
  ![Feature2](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_2.png)
 
+</p>
+</details>
+
 ### Feature Extractions for training data
 
 Since the training data is a large csv file (9.5GB), which exceeds the computation capability of our laptop, we use the pandas with `chunksize = 150000` to load one time-series windown at one. At each time window, 150_000 input data is transformed into 16 dimensional vectors (16 features) and append to input dataframe. The target is the `time before failure` is also appended to a separate dataframe.
@@ -269,9 +273,6 @@ X.to_csv('extract_test_Jul08.csv')
 </p>
 </details>
 
-
-</p>
-</details>
 
 ## III. Principal Component Analysis - PCA
 
