@@ -11,6 +11,10 @@ Earthquakes are devastating natural disasters and possess the potential to destr
   <img width="460" height="300" src="https://github.com/jlightstone/cs_project/blob/master/Graphs/earthquake.jpg">
 </p>
 
+**Earthquake and the Physic of Earthquake**
+![EarthQuake](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Earthquake_Acoustic.png)
+(Figure credited to [outsidethebeltway](https://www.outsidethebeltway.com/second-major-earthquake-hits-southern-california/) and **[1]**)
+
 Scientist have recently discovered that “constant tremors” measured along fault lines provide valuable information about earthquake activity. The goal of this project is to utilize a machine learning (ML) approach to analyze experimental data that simulates the tremors at fault lines. Ultimately, the goal of the project is to develop a generalized ML model capable of correctly predicting the time until failure.    
 
 <p align="center">
