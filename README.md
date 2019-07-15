@@ -122,6 +122,8 @@ def generate_feature_FFT(seg_id, seg, X):
 </p>
 </details>
 
+ ![Feature1](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_1.png)
+
 **Rolling windows (6 features) 
 ‘Roll_mean_absDiff’,‘Roll_mean_p05’,‘Roll_std_absDiff’,‘Roll_std_p05’,‘Roll_std_p30’,‘Roll_std_p60’**  
 
@@ -171,6 +173,8 @@ def generate_feature_Melfrequency(seg_id, seg, X):
 </p>
 </details>
 
+ ![Feature2](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_2.png)
+
 ### Feature Extractions for training data
 
 Since the training data is a large csv file (9.5GB), which exceeds the computation capability of our laptop, we use the pandas with `chunksize = 150000` to load one time-series windown at one. At each time window, 150_000 input data is transformed into 16 dimensional vectors (16 features) and append to input dataframe. The target is the `time before failure` is also appended to a separate dataframe.
@@ -214,10 +218,12 @@ The resulting table is as follows:
 | 9  | 9     | 4.73096  | 6.890459 | 0.150779 | 5             | 4.85E-16      | 2620.174     | 709644      | 2.51611      | 2.915285     | 3.575718     | -4.13E-06        | 4.01          | 7.14E-06          | -27.4852    | 5.983643    |
 | 10 | 10    | 4.582873 | 6.157272 | 1.572985 | 3             | 1.16E-15      | 2452.427     | 687431      | 2.483786     | 2.858197     | 3.409716     | 1.87E-07         | 3.87          | -5.47E-06         | -26.2505    | 5.390637    |
 
-### Visualization of 16 features
-
 <details><summary>CLICK TO EXPAND</summary>
 <p>
+  
+### Visualization of 16 features
+
+
   
 ```python
 X1, y1 = X.iloc[500:1000], y.iloc[500:1000]
@@ -230,18 +236,19 @@ for i, col in enumerate(X.columns):
     ax1.legend(loc= 2);ax2.legend(['time_to_failure'], loc=1)
 plt.subplots_adjust(wspace=0.5, hspace=0.3)
 ```
-
+ ![Feature Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Visualization.png)
+ 
 </p>
 </details>
 
- ![Feature Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Visualization.png)
- 
+
+<details><summary>Test Dataset</summary>
+<p>
+  
  ### Load the test data and Visualize
 
 The test data does not provide the information on the time when the data is recorded. We believe this information is encoded inside the segment ID in heximal form. Nonetheless, we can make the prediction with the rest of 15 features.
 
-<details><summary>CLICK TO EXPAND</summary>
-<p>
   
 ```python
 submission = pd.read_csv('sample_submission.csv', index_col='seg_id')
@@ -262,11 +269,11 @@ for ii,seg_name in tqdm_notebook(enumerate(submission.index)):
 X.to_csv('extract_test_Jul08.csv')
 ```
 
+ ![Test_Signal_Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Test_set_visualization.png)
+ 
 </p>
 </details>
 
-
- ![Test_Signal_Visualization](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Test_set_visualization.png)
 
 </p>
 </details>
