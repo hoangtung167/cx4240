@@ -1,3 +1,9 @@
+
+# Los Alamos National Laboratory Earthquake Prediction
+
+#### Huy Thong Nguyen, Tung Hoang, Jordan Lightstone, Danial Huff
+#### CX4240 Project
+
 ## I. Problem statements
 **Earthquake and the Physic of Earthquake**
 ![EarthQuake](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Earthquake_Acoustic.png)
@@ -938,6 +944,13 @@ Features Importance:
   
 </p>
 </details>
+
+### PCA with LGBM
+
+Since we identify the LBGM achieves the highest 5fold Cross Validation score, we apply PCA with dimensionality reduction on the dataset.
+Clearly shown on the graph is that we achieve similar performance with dimension = 10 compared to dimension = 16.
+
+![LGBM_PCA](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LBGM_PCA.png)
 
 ## VII. Summary
 
