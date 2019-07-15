@@ -201,19 +201,20 @@ plt.subplots_adjust(wspace=0.5, hspace=0.3)
 
 ### Linear Regression and Polynomial Regression Performance
 
-Analysis began with linear and polynomial regression.  
+Analysis began with linear and polynomial regression:
 1. With in the linear regression framework, multiple regulization techniques were tested- Ridge, Lasso, and Huber Regressor. However when we perform K- Fold cross validation with 5 folds, we do not observed any significant improvement in the Mean Absolute Error and variances of the this value. We suspect the reason come from the fact that the linear regression model already has a tendency to centerize the predicted values.
-2. For the polynomial model we fit the model to a 2nd degree polynomial. The choice comes from our observation of K-Fold cross validation (5 folds) of the models with different degrees. From the graphs below, we can observe that the Mean Absolute Error has a tendency to increase as the polynomial degree is increased. Furthermore, the variance increases significantly as the polynomial degree is increased. This likely indicates that overfitting has occured. Ultimately we decide to use 2nd degree polynomial to build a model (1st degree polynomial is simply a linear function). 
-
-The linear regression model provide fairly acceptable prediction for "time before failure". **However, the model was unable to predict high peaks and yields a consistent trend of repeating height - nearly periodic. The polynomial regression model yields nearly identical resuts to the linear regression model, but displays a slightly larger error.**
 
 <p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Linear%20Regression%20K%20Fold.png">
 </p>
 
+2. For the polynomial model we fit the model to a 2nd degree polynomial. The choice comes from our observation of K-Fold cross validation (5 folds) of the models with different degrees. From the graphs below, we can observe that the Mean Absolute Error has a tendency to increase as the polynomial degree is increased. Furthermore, the variance increases significantly as the polynomial degree is increased. This likely indicates that overfitting has occured. Ultimately we decide to use 2nd degree polynomial to build a model (1st degree polynomial is simply a linear function). 
+
 <p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Polynomial%20K%20Fold.png">
 </p>
+
+The linear regression model provide fairly acceptable prediction for "time before failure". **However, the model was unable to predict high peaks and yields a consistent trend of repeating height - nearly periodic. The polynomial regression model yields nearly identical resuts to the linear regression model, but displays a slightly larger error.**
 
 <p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20Predicted%20Values.png">
@@ -222,6 +223,8 @@ The linear regression model provide fairly acceptable prediction for "time befor
 <p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/Compare%20MAE%20Linear%20Polynomial.png">
 </p>
+
+We also extract the coefficients from the weight vector of the linear regression to understand the sensitivity of the outcome regarding the change in each parameters: 
 
 <p align="center">
   <img/ src="https://github.com/hoangtung167/cx4240/blob/master/Graphs/bar_plot_with_error_bars.png">
