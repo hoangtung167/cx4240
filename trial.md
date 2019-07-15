@@ -46,6 +46,9 @@ import statistics
 
 ## II. Feature Extraction
 
+
+![Feature Extraction Concept](https://github.com/hoangtung167/cx4240/blob/master/Graphs/Feature_Extraction_Concept.png)
+
 Using resourses from [kaggle](https://www.kaggle.com/c/LANL-Earthquake-Prediction/discussion/94390#latest-554034), we determined 16 statistical features that serve as potential candidates for understanding the experimental data. The features are broken into four different catagories- basic, fast fourier transformed, rolling window, and mel-frequency features. 
 
 The 'basic' features are calculate using simple statistics and include ‘mean’, ‘std’, and ‘skew’.  The 'fast fourier transformed' features convert the time-domain signal into a frequency-domain signal, which results in real and imaginary numbers. The mean and standard deviation for the real and imaginary numbers are calculated, resulting in 4 additional features. The 'rolling windows method' resulted from breaking the larger data set into a rolling window size of 100. From this, the mean, standard deviation, and upper and lower percentiles subsets were used to extract an additional six features. Lastly, the Librosa toolbox was used to calculate the Mel-frequency cepstral coefficients of two features. Below four of the calculated features are plotted on the same graph as the time to failure. 
@@ -131,6 +134,43 @@ plt.subplots_adjust(wspace=0.5, hspace=0.3)
 ```
 </p>
 </details>
+
+### Feature Extractions for training data
+
+Since the training data is a large csv file (9.5GB), which exceeds the computation capability of our laptop, we use the pandas with `chunksize = 150000` to load one time-series windown at one. At each time window, 150_000 input data is transformed into 16 dimensional vectors (16 features) and append to input dataframe. The target is the `time before failure` is also appended to a separate dataframe.
+
+<details><summary>CLICK TO EXPAND</summary>
+<p>
+  
+```python
+
+chunksize = 150000
+CsvFileReader = pd.read_csv('train.csv', chunksize = chunksize)
+X, y = pd.DataFrame(), pd.DataFrame()
+
+for seg_id, seg in tqdm_notebook(enumerate(CsvFileReader)):
+    y.loc[seg_id, 'target'] = seg['time_to_failure'].values[-1]
+    generate_feature_basic(seg_id, seg, X)
+    generate_feature_FFT(seg_id, seg, X)
+    generate_feature_Roll(seg_id, seg, X)
+    generate_feature_Melfrequency(seg_id, seg, X)
+
+X.to_csv('extract_train_Jul08.csv')
+y.to_csv('extract_label_Jul08.csv')
+```
+
+</p>
+</details>
+
+The resulting table is as follows:
+
+|    | index | mean     | std      | skew     | FFT_mean_real | FFT_mean_imag | FFT_std_real | FFT_std_max | Roll_std_p05 | Roll_std_p30 | Roll_std_p60 | Roll_std_absDiff | Roll_mean_p05 | Roll_mean_absDiff | MFCC_mean02 | MFCC_mean16 |
+|----|-------|----------|----------|----------|---------------|---------------|--------------|-------------|--------------|--------------|--------------|------------------|---------------|-------------------|-------------|-------------|
+| 0  | 0     | 4.884113 | 5.101106 | -0.02406 | 12            | -1.70E-15     | 2349.811     | 732617      | 2.475639     | 2.848551     | 3.367387     | -5.24E-06        | 4.16          | -2.40E-06         | -26.0598    | 5.51279     |
+| 1  | 1     | 4.725767 | 6.588824 | 0.390561 | 5             | 1.84E-15      | 2566.032     | 708865      | 2.475965     | 2.847842     | 3.38893      | -4.87E-07        | 4.05          | -7.34E-07         | -26.4857    | 5.695142    |
+| 2  | 2     | 4.906393 | 6.967397 | 0.217391 | 5             | 4.85E-16      | 2683.549     | 735959      | 2.538591     | 2.942616     | 3.589814     | 5.39E-06         | 4.14          | 5.07E-06          | -26.484     | 5.620199    |
+| 3  | 3     | 4.90224  | 6.922305 | 0.757278 | 5             | -1.07E-15     | 2685.789     | 735336      | 2.496442     | 2.863141     | 3.442515     | -8.68E-06        | 4.16          | -5.34E-07         | -25.5651    | 5.241189    |
+
 
 ## III. Testing Maching Learning Models
 
