@@ -950,7 +950,7 @@ Features Importance:
 Since we identify the LBGM achieves the highest 5fold Cross Validation score, we apply PCA with dimensionality reduction on the dataset.
 Clearly shown on the graph is that we achieve similar performance with dimension = 10 compared to dimension = 16.
 
-![LGBM_PCA](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LBGM_PCA.png)
+![LGBM_PCA](https://github.com/hoangtung167/cx4240/blob/master/Graphs/LGBM_PCA.png)
 
 ## VII. Summary
 
