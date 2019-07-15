@@ -721,7 +721,7 @@ Clearly shown on the graph is that we achieve similar performance with dimension
 </p>
 
 
-## VIII. References
+## VII. References
 
 [1]	Rouet‐Leduc et al. Machine learning predicts laboratory earthquakes. Geophysical Research Letters, (2017) https://doi.org/10.1002/2017GL074677
 
