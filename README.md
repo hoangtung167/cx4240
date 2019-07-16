@@ -515,17 +515,25 @@ NN Validation (no_index) MeanAbsoluteError: Mean = 2.113 Std = 0.033
 NN Validation (index) MeanAbsoluteError: Mean = 2.071 Std = 0.034
 ![NN with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/NN_with_index.png)
 
+Out of many models the one that worked the best was a NN with one hidden layer, one output neuron.  The optimization algorithm we used was standard gradient decsent.
+
 ### Support Vector Machine (SVM)
   
 SVM with linear Kernel Validation (index) MeanAbsoluteError: Mean = 2.065 Std = 0.038
 ![SVM linear with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_linear_withIndex.png)
 
+A linear kernel allows us to extract the importance of each feature. 
+
 SVM with rbf Kernel Validation (index) MeanAbsoluteError: Mean = 1.987 Std = 0.030
 ![SVM rbf with Index](https://github.com/hoangtung167/cx4240/blob/master/Graphs/svm_rbf_index.png)
+
+"Radial Basis Function" kernel works by mapping the data from its original feature space to a radial one (Z space).  This allows for the model to find support vectors that aren't the same as linear ones.
 
 ### Comparing SVM vs. NN
 
 ![SVM NN Comp](https://github.com/hoangtung167/cx4240/blob/master/Graphs/SVM_NN_Comparison.png)
+
+Though the SVM rbf kernal worked the best it was only marginal.  The Neural Net and SVM models seem to run into the same problem as the regression models shown before (models have a hard time capturing the periodic peak failure times).
 
 #### Building NN and SVM
 
